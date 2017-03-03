@@ -12,6 +12,7 @@
     <AssemblyName>Webhooks.Azure.Cloud</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>Webhooks.Azure.Cloud</Name>
+    <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
   </PropertyGroup>
   <Import Project="..\BuildConfiguration.targets" />
   <!-- Items for the project -->
@@ -20,22 +21,21 @@
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Webhooks.Azure.EventRelay\Webhooks.Azure.EventRelay.csproj">
-      <Name>Webhooks.Azure.EventRelay</Name>
+    <Folder Include="EventRelayWorkerRoleContent\" />
+    <Folder Include="Webhooks.Azure.EventRelayContent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EventRelayWorkerRole\EventRelayWorkerRole.csproj">
+      <Name>EventRelayWorkerRole</Name>
       <Project>{d89d2381-375c-47b3-9534-0315b7a149d4}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
-      <RoleName>Webhooks.Azure.EventRelay</RoleName>
+      <RoleName>EventRelayWorkerRole</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EventRelayContent\" />
-    <Folder Include="Webhooks.Azure.EventRelayContent\" />
-  </ItemGroup>
-  <ItemGroup>
-    <DiagnosticsConfiguration Include="EventRelayContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="Webhooks.Azure.EventRelayContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="EventRelayWorkerRoleContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

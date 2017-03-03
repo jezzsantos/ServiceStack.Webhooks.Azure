@@ -24,9 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6A5E54
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting.Common", "UnitTesting.Common\UnitTesting.Common.csproj", "{6468D272-EBA8-46BB-8D57-19E9EC3AB100}"
 EndProject
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Webhooks.Azure.Cloud", "Webhooks.Azure.Cloud\Webhooks.Azure.Cloud.ccproj", "{E976BCF9-0B83-4A8F-9481-4501A1CF1933}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Cloud", "Cloud\Cloud.ccproj", "{E976BCF9-0B83-4A8F-9481-4501A1CF1933}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhooks.Azure.EventRelay", "Webhooks.Azure.EventRelay\Webhooks.Azure.EventRelay.csproj", "{D89D2381-375C-47B3-9534-0315B7A149D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventRelayWorkerRole", "EventRelayWorkerRole\EventRelayWorkerRole.csproj", "{D89D2381-375C-47B3-9534-0315B7A149D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

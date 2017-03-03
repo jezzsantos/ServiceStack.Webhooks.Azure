@@ -124,12 +124,12 @@ namespace ServiceStack.Webhooks.Azure.IntTests
             if (!Directory.Exists(cloudConfigDirCsx))
             {
                 throw new InvalidOperationException(@"The azure test environment is not configured correctly! 
-The 'Webhooks.Azure.Cloud' project needs to have been packaged for the current configuration (Local|Debug), and copied (deployed) for integration testing (by the 'AfterBuild' MSBUILD Target).
+The 'Cloud' project needs to have been packaged for the current configuration (Local|Debug), and copied (deployed) for integration testing (by the 'AfterBuild' MSBUILD Target).
 
 Check the following: 
-    (1) That the 'Webhooks.Azure.Cloud' project has been manually 'packaged' in Debug|Local mode, 
+    (1) That the 'Cloud' project has been manually 'packaged' in Debug|Local mode, 
     (2) that the integration test project (Webhooks.Azure.IntTests) has been configured (by the 'AfterBuild' MSBUILD Target) to copy the packaged cloud configuration files (def, csx, rcf directories) into its own project directory (i.e. under TestContent\Cloud\bin) on every build,
-    (3) that the integration test project (Webhooks.Azure.IntTests) has a build dependency (in solution settings) on the cloud project (Webhooks.Azure.Cloud).");
+    (3) that the integration test project (Webhooks.Azure.IntTests) has a build dependency (in solution settings) on the cloud project (Cloud).");
             }
         }
 
