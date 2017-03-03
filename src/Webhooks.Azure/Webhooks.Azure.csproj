@@ -111,20 +111,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Webhooks.Common\Webhooks.Common.csproj">
-      <Project>{9607b2fc-6b77-41a1-910c-257cb786bd9c}</Project>
-      <Name>Webhooks.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Webhooks.Interfaces\Webhooks.Interfaces.csproj">
-      <Project>{61c93a39-41bf-4aca-80b4-cb1d50a8858a}</Project>
-      <Name>Webhooks.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Webhooks.Relays\Webhooks.Relays.csproj">
-      <Project>{1f406b4f-e891-49d9-8435-64e2fdc343c8}</Project>
-      <Name>Webhooks.Relays</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

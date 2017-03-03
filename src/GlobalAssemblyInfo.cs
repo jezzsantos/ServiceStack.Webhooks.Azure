@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("jezzsantos")]
-[assembly: AssemblyProduct("ServiceStack.Webhooks")]
+[assembly: AssemblyProduct("ServiceStack.Webhooks.Azure")]
 [assembly: AssemblyCopyright("Copyright jezzsantos © 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
