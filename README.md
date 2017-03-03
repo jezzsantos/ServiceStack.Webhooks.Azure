@@ -64,7 +64,7 @@ Go to the 'Settings' tab and add the following settings:
 * (ConnectionString) AzureQueueWebhookEventSink.ConnectionString - The Azure Storage account connection string for your queue. For example: UseDevelopmentStorage=true
 * (string) AzureQueueWebhookEventSink.Queue.Name - The name of the queue where events will be written. For example: webhookevents
 
-### Configuring an Azure WorkerRole Relay
+## Configuring an Azure WorkerRole Relay
 
 To relay events from an Azure queue, you can deploy an Azure WorkerRole that picks up the events from the 'queue' and relays them to all subscribers.
 Since you are deploying this component to Azure, the configuration for it will likely exist in your Azure configuration (`ServiceConfiguration.cscfg`) file:
@@ -121,50 +121,9 @@ Go to the 'Settings' tab and add the following settings:
 
 Note: the value of the setting `EventRelayQueueProcessor.TargetQueue.Name` must be the same as the `AzureQueueWebhookEventSink.QueueName` that you may have configured in the `WebhookFeature`.
 
-### Configuring Azure Storage Credentials
+## Configuring Azure Storage Resources
 
-By default, these services will connect to the local Azure Emulator (UseDevelopmentStorage=true) which might be fine for testing your service, but after you have deployed to your cloud, you will want to provide different storage connection strings.
-
-If you use the overload constructors, and pass in the `IAppSettings`, like this, you can load settings from your Azure cloud configuration (`ServiceConfiguration.cscfg`):
-
-```
-public override void Configure(Container container)
-{
-    var appSettings = new CloudAppSettings();
-    container.Register<IAppSettings>(appSettings);
-
-    container.Register<IWebhookSubscriptionStore>(new AzureTableWebhookSubscriptionStore(appSettings));
-    container.Register<IWebhookEventSink>(new AzureQueueWebhookEventSink(appSettings));
-
-    Plugins.Add(new WebhookFeature();
-}
-```
-Then for your selected configuration, add these settings:
-
-* `AzureTableWebhookSubscriptionStore` will try to use a setting called: 'AzureTableWebhookSubscriptionStore.ConnectionString' for its storage connection
-* `AzureQueueWebhookEventSink` will try to use a setting called: 'AzureQueueWebhookEventSink.ConnectionString' for its storage connection
-
-Otherwise, you can set those values directly in code when you register the services:
-
-```
-public override void Configure(Container container)
-{
-    container.Register<IWebhookSubscriptionStore>(new AzureTableWebhookSubscriptionStore
-        {
-            ConnectionString = "connectionstring",
-        });
-    container.Register<IWebhookEventSink>(new AzureQueueWebhookEventSink
-        {
-            ConnectionString = "connectionstring",
-        });
-
-    Plugins.Add(new WebhookFeature();
-}
-```
-
-### Configuring Azure Storage Resources
-
-By default, these services will use default names for storage table and event queue, which might be fine for you, but you may want to provide different names or connection strings for different deployments.
+By default, these services will use default names for storage table and event queue, and will connect to the local Azure Emulator (UseDevelopmentStorage=true) storage account, which might be fine for you, but you may want to provide different names or connection strings for different deployments.
 
 * `AzureTableWebhookSubscriptionStore` will create and use a storage table named: 'webhooksubscriptions'
 * `AzureQueueWebhookEventSink` will create and use a storage queue named: 'webhookevents'
