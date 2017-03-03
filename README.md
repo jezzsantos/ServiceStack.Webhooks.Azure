@@ -5,16 +5,16 @@ Add Webhooks to your Azure ServiceStack services
 
 # Overview
 
-This project makes it very easy to plugin Azure components of the http://github.com/jezzsantos/ServiceStack.Webhooks architecture.
+This project makes it very easy to plugin various Azure components to the [ServiceStack.Webhooks architecture](http://github.com/jezzsantos/ServiceStack.Webhooks).
 
 
-![](https://raw.githubusercontent.com/jezzsantos/ServiceStack.Webhooks.Azure/master/docs/images/Webhooks.Architecture.PNG)
+![](https://raw.githubusercontent.com/jezzsantos/ServiceStack.Webhooks/master/docs/images/Webhooks.Architecture.PNG)
 
-If you cant find the component you want for your Azure architecture, it should be easy for you to build add your own and _just plug it in_.
+If you cant find the exact component you want for your Azure architecture, it is easy for you to build add your own and _just plug it in_.
 
 ### Contribute!
 
-Want to get involved in this project? or want to help improve this capability for your services? just send us a message or pull-request!
+Want to get involved in this project? or something missing and you want to help improve this capability for your services? just send us a message or pull-request!
 
 # Getting Started
 
@@ -23,7 +23,7 @@ Install from NuGet:
 Install-Package ServiceStack.Webhooks.Azure
 ```
 
-If you deploy your web service to Microsoft Azure, you may want to use Azure storage Tables and Queues etc. to implement the various components of the webhooks.
+If you deploy yourServiceStack web service to Microsoft Azure, you may want to use Azure storage Tables, Queues, Buses etc. to allow your app to scale and perform at scale when using webhooks.
 
 For example, 'subscriptions' can be stored in Azure Table Storage, 'events' can be queued in a Azure Queue Storage, and then 'events' can be relayed by a WorkerRole to subscribers.
 
