@@ -3,6 +3,8 @@
 # ServiceStack.Webhooks.Azure
 Add Webhooks to your Azure ServiceStack services
 
+# [Release Notes](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/wiki/Release-Notes)
+
 # Overview
 
 This project makes it very easy to plugin various Azure components to the [ServiceStack.Webhooks architecture](http://github.com/jezzsantos/ServiceStack.Webhooks), which looks like this:
