@@ -11,6 +11,7 @@
       <Setting name="EventRelayQueueProcessor.UnhandledQueue.Name" value="unhandledwebhookevents" />
       <Setting name="EventRelayQueueProcessor.ServiceClient.Retries" value="3" />
       <Setting name="EventRelayQueueProcessor.ServiceClient.Timeout.Seconds" value="60" />
+      <Setting name="EventRelayQueueProcessor.SubscriptionCache.Timeout.Seconds" value="2" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

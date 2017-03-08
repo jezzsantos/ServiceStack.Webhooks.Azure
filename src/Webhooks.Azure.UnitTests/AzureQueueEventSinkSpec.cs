@@ -7,19 +7,19 @@ using ServiceStack.Webhooks.Azure.Queue;
 
 namespace ServiceStack.Webhooks.Azure.UnitTests
 {
-    public class AzureQueueWebhookEventSinkSpec
+    public class AzureQueueEventSinkSpec
     {
         [TestFixture]
         public class GivenAStore
         {
             private Mock<IAzureQueueStorage<WebhookEvent>> queueStorage;
-            private AzureQueueWebhookEventSink sink;
+            private AzureQueueEventSink sink;
 
             [SetUp]
             public void Initialize()
             {
                 queueStorage = new Mock<IAzureQueueStorage<WebhookEvent>>();
-                sink = new AzureQueueWebhookEventSink
+                sink = new AzureQueueEventSink
                 {
                     QueueStorage = queueStorage.Object
                 };
@@ -28,9 +28,9 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
             [Test, Category("Unit")]
             public void WhenCtorWithNoSetting_ThenInitializes()
             {
-                sink = new AzureQueueWebhookEventSink();
+                sink = new AzureQueueEventSink();
 
-                Assert.That(sink.QueueName, Is.EqualTo(AzureQueueWebhookEventSink.DefaultQueueName));
+                Assert.That(sink.QueueName, Is.EqualTo(AzureQueueEventSink.DefaultQueueName));
                 Assert.That(sink.ConnectionString, Is.EqualTo(AzureStorage.AzureEmulatorConnectionString));
             }
 
@@ -38,12 +38,12 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
             public void WhenCtorWithSettings_ThenInitializesFromSettings()
             {
                 var appSettings = new Mock<IAppSettings>();
-                appSettings.Setup(settings => settings.Get(AzureQueueWebhookEventSink.AzureConnectionStringSettingName, It.IsAny<string>()))
+                appSettings.Setup(settings => settings.Get(AzureQueueEventSink.AzureConnectionStringSettingName, It.IsAny<string>()))
                     .Returns("aconnectionstring");
-                appSettings.Setup(settings => settings.Get(AzureQueueWebhookEventSink.QueueNameSettingName, It.IsAny<string>()))
+                appSettings.Setup(settings => settings.Get(AzureQueueEventSink.QueueNameSettingName, It.IsAny<string>()))
                     .Returns("aqueuename");
 
-                sink = new AzureQueueWebhookEventSink(appSettings.Object);
+                sink = new AzureQueueEventSink(appSettings.Object);
 
                 Assert.That(sink.QueueName, Is.EqualTo("aqueuename"));
                 Assert.That(sink.ConnectionString, Is.EqualTo("aconnectionstring"));

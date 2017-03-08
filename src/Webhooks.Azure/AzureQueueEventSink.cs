@@ -5,21 +5,21 @@ using ServiceStack.Webhooks.Azure.Queue;
 
 namespace ServiceStack.Webhooks.Azure
 {
-    public class AzureQueueWebhookEventSink : IWebhookEventSink
+    public class AzureQueueEventSink : IEventSink
     {
         internal const string DefaultQueueName = "webhookevents";
-        internal const string AzureConnectionStringSettingName = "AzureQueueWebhookEventSink.ConnectionString";
-        internal const string QueueNameSettingName = "AzureQueueWebhookEventSink.Queue.Name";
+        internal const string AzureConnectionStringSettingName = "AzureQueueEventSink.ConnectionString";
+        internal const string QueueNameSettingName = "AzureQueueEventSink.Queue.Name";
         private IAzureQueueStorage<WebhookEvent> queueStorage;
 
-        public AzureQueueWebhookEventSink()
+        public AzureQueueEventSink()
         {
             QueueName = DefaultQueueName;
 
             ConnectionString = AzureStorage.AzureEmulatorConnectionString;
         }
 
-        public AzureQueueWebhookEventSink(IAppSettings settings)
+        public AzureQueueEventSink(IAppSettings settings)
             : this()
         {
             Guard.AgainstNull(() => settings, settings);

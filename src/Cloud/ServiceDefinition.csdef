@@ -10,6 +10,7 @@
       <Setting name="EventRelayQueueProcessor.UnhandledQueue.Name" />
       <Setting name="EventRelayQueueProcessor.ServiceClient.Retries" />
       <Setting name="EventRelayQueueProcessor.ServiceClient.Timeout.Seconds" />
+      <Setting name="EventRelayQueueProcessor.SubscriptionCache.Timeout.Seconds" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

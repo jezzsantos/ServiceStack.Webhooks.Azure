@@ -28,15 +28,15 @@ If you deploy your ServiceStack web service to Microsoft Azure, you may want to 
 
 For example, 'subscriptions' can be stored in Azure Table Storage, or Azure SQL, 'events' can be queued in Azure Queue Storage,  Function, or Service Bus, and then 'events' can be relayed by a Function, ServiceBus or WorkerRole to subscribers.
 
-![](https://raw.githubusercontent.com/jezzsantos/ServiceStack.Webhooks/master/docs/images/Webhooks.Azure.PNG)
+![](https://raw.githubusercontent.com/jezzsantos/ServiceStack.Webhooks.Azure/master/docs/images/Webhooks.Azure.PNG)
 
 Add the `WebhookFeature` in your `AppHost.Configure()` method as usual, and register the Azure components:
 
 ```
 public override void Configure(Container container)
 {
-    container.Register<IWebhookSubscriptionStore>(new AzureTableWebhookSubscriptionStore());
-    container.Register<IWebhookEventSink>(new AzureQueueWebhookEventSink());
+    container.Register<ISubscriptionStore>(new AzureTableSubscriptionStore());
+    container.Register<IEventSink>(new AzureQueueEventSink());
 
     Plugins.Add(new WebhookFeature();
 }
@@ -50,8 +50,8 @@ public override void Configure(Container container)
     var appSettings = new CloudAppSettings();
     container.Register<IAppSettings>(appSettings);
 
-    container.Register<IWebhookSubscriptionStore>(new AzureTableWebhookSubscriptionStore(appSettings));
-    container.Register<IWebhookEventSink>(new AzureQueueWebhookEventSink(appSettings));
+    container.Register<ISubscriptionStore>(new AzureTableSubscriptionStore(appSettings));
+    container.Register<IEventSink>(new AzureQueueEventSink(appSettings));
 
     Plugins.Add(new WebhookFeature();
 }
@@ -61,10 +61,11 @@ Then, in the 'Cloud' project that you have created for your service, edit the pr
 
 Go to the 'Settings' tab and add the following settings:
 
-* (ConnectionString) AzureTableWebhookSubscriptionStore.ConnectionString - The Azure Storage account connection string for your table. For example: UseDevelopmentStorage=true
-* (string) AzureTableWebhookSubscriptionStore.Table.Name - The name of the table where subscriptions will be stored. For example: webhooksubscriptions
-* (ConnectionString) AzureQueueWebhookEventSink.ConnectionString - The Azure Storage account connection string for your queue. For example: UseDevelopmentStorage=true
-* (string) AzureQueueWebhookEventSink.Queue.Name - The name of the queue where events will be written. For example: webhookevents
+* (ConnectionString) AzureTableSubscriptionStore.ConnectionString - The Azure Storage account connection string for your table. For example: UseDevelopmentStorage=true
+* (string) AzureTableSubscriptionStore.SubscriptionsTable.Name - The name of the storage table where subscriptions are stored. For example: webhooksubscriptions
+* (string) AzureTableSubscriptionStore.DeliveryResultsTable.Name - The name of the storage table where delivery results are stored. For example: webhookdeliveryresults
+* (ConnectionString) AzureQueueEventSink.ConnectionString - The Azure Storage account connection string for your queue. For example: UseDevelopmentStorage=true
+* (string) AzureQueueEventSink.Queue.Name - The name of the queue where events will be written. For example: webhookevents
 
 ## Configuring an Azure WorkerRole Relay
 
@@ -121,14 +122,14 @@ Go to the 'Settings' tab and add the following settings:
 * (string) EventRelayQueueProcessor.ServiceClient.Retries - The number of retry attempts the relay will make to notify a subscriber before giving up. For example: 3
 * (string) EventRelayQueueProcessor.ServiceClient.Timeout.Seconds - The timeout (in seconds) the relay will wait for the subscriber endpoint before cancelling the notification. For example: 60
 
-Note: the value of the setting `EventRelayQueueProcessor.TargetQueue.Name` must be the same as the `AzureQueueWebhookEventSink.QueueName` that you may have configured in the `WebhookFeature`.
+Note: the value of the setting `EventRelayQueueProcessor.TargetQueue.Name` must be the same as the `AzureQueueEventSink.QueueName` that you may have configured in the `WebhookFeature`.
 
 ## Configuring Azure Storage Resources
 
 By default, these services will use default names for storage table and event queue, and will connect to the local Azure Emulator (UseDevelopmentStorage=true) storage account, which might be fine for you, but you may want to provide different names or connection strings for different deployments.
 
-* `AzureTableWebhookSubscriptionStore` will create and use a storage table named: 'webhooksubscriptions'
-* `AzureQueueWebhookEventSink` will create and use a storage queue named: 'webhookevents'
+* `AzureTableSubscriptionStore` will create and use a storage table named: 'webhooksubscriptions'
+* `AzureQueueEventSink` will create and use a storage queue named: 'webhookevents'
 
 If you use the overload constructors, and pass in the `IAppSettings`, like this, you can load settings from your Azure cloud configuration (`ServiceConfiguration.cscfg`):
 
@@ -138,30 +139,32 @@ public override void Configure(Container container)
     var appSettings = new CloudAppSettings();
     container.Register<IAppSettings>(appSettings);
 
-    container.Register<IWebhookSubscriptionStore>(new AzureTableWebhookSubscriptionStore(appSettings));
-    container.Register<IWebhookEventSink>(new AzureQueueWebhookEventSink(appSettings));
+    container.Register<ISubscriptionStore>(new AzureTableSubscriptionStore(appSettings));
+    container.Register<IEventSink>(new AzureQueueEventSink(appSettings));
 
     Plugins.Add(new WebhookFeature();
 }
 ```
 Then for your selected configuration, add these settings:
 
-* (ConnectionString) AzureTableWebhookSubscriptionStore.ConnectionString - The storage account for storing subscriptions.
-* (string) AzureTableWebhookSubscriptionStore.Table.Name - The name of the storage table where subscriptions are stored. For example: webhooksubscriptions
-* (ConnectionString) AzureQueueWebhookEventSink.ConnectionString - The storage account for storing events.
-* (string) AzureQueueWebhookEventSink.Queue.Name - The name of the queue where events are stored before being relayed: For example: webhookevents
+* (ConnectionString) AzureTableSubscriptionStore.ConnectionString - The storage account for storing subscriptions.
+* (string) AzureTableSubscriptionStore.SubscriptionsTable.Name - The name of the storage table where subscriptions are stored. For example: webhooksubscriptions
+* (string) AzureTableSubscriptionStore.DeliveryResultsTable.Name - The name of the storage table where delivery results are stored. For example: webhookdeliveryresults
+* (ConnectionString) AzureQueueEventSink.ConnectionString - The storage account for storing events.
+* (string) AzureQueueEventSink.Queue.Name - The name of the queue where events are stored before being relayed: For example: webhookevents
 
 Otherwise, you can set those values directly in code when you register the services:
 
 ```
 public override void Configure(Container container)
 {
-    container.Register<IWebhookSubscriptionStore>(new AzureTableWebhookSubscriptionStore
+    container.Register<ISubscriptionStore>(new AzureTableSubscriptionStore
         {
-            TableName = "mytablename",
+            SubscriptionTableName = "mytablename",
+            DeliveryResultsTableName = "mytablename",
             ConnectionString = "mystorageaccount"
         });
-    container.Register<IWebhookEventSink>(new AzureQueueWebhookEventSink
+    container.Register<IEventSink>(new AzureQueueEventSink
         {
             QueueName = "myqueuename",
             ConnectionString = "mystorageaccount"

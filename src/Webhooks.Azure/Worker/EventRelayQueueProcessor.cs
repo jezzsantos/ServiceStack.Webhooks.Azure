@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ServiceStack.Configuration;
 using ServiceStack.Webhooks.Azure.Queue;
 using ServiceStack.Webhooks.Clients;
+using ServiceStack.Webhooks.Relays;
 using ServiceStack.Webhooks.ServiceModel.Types;
 
 namespace ServiceStack.Webhooks.Azure.Worker
@@ -14,14 +17,16 @@ namespace ServiceStack.Webhooks.Azure.Worker
         internal const int DefaultServiceClientRetries = 3;
         internal const int DefaultServiceClientTimeoutSeconds = 60;
         private const int DefaultPollingIntervalSeconds = 5;
-        private const string DefaultTargetQueueName = AzureQueueWebhookEventSink.DefaultQueueName;
-        private const string DefaultUnhandledQueueName = "unhandled" + AzureQueueWebhookEventSink.DefaultQueueName;
+        internal const int DefaultSubscriptionCacheTimeoutSeconds = 60;
+        private const string DefaultTargetQueueName = AzureQueueEventSink.DefaultQueueName;
+        private const string DefaultUnhandledQueueName = "unhandled" + AzureQueueEventSink.DefaultQueueName;
         private const string PollingIntervalSettingName = "EventRelayQueueProcessor.Polling.Interval.Seconds";
         internal const string AzureConnectionStringSettingName = "EventRelayQueueProcessor.ConnectionString";
         internal const string TargetQueueNameSettingName = "EventRelayQueueProcessor.TargetQueue.Name";
         internal const string UnhandledQueneNameStringSettingName = "EventRelayQueueProcessor.UnhandledQueue.Name";
         internal const string SeviceClientRetriesSettingName = "EventRelayQueueProcessor.ServiceClient.Retries";
         internal const string DefaultSeviceClientTimeoutSettingName = "EventRelayQueueProcessor.ServiceClient.Timeout.Seconds";
+        internal const string DefaultSubscriptionCacheTimeoutSettingsName = "EventRelayQueueProcessor.SubscriptionCache.Timeout.Seconds";
 
         private int pollingInterval;
         private IAzureQueueStorage<WebhookEvent> targetQueue;
@@ -65,9 +70,11 @@ namespace ServiceStack.Webhooks.Azure.Worker
             set { unhandledQueue = value; }
         }
 
-        public IWebhookEventSubscriptionCache SubscriptionCache { get; set; }
+        public IEventSubscriptionCache SubscriptionCache { get; set; }
 
-        public IWebhookEventServiceClient ServiceClient { get; set; }
+        public IEventServiceClient ServiceClient { get; set; }
+
+        public ISubscriptionService SubscriptionService { get; set; }
 
         public override int IntervalSeconds
         {
@@ -88,17 +95,29 @@ namespace ServiceStack.Webhooks.Azure.Worker
         public override bool ProcessMessage(WebhookEvent message)
         {
             var subscriptions = SubscriptionCache.GetAll(message.EventName);
+            var results = new List<SubscriptionDeliveryResult>();
             subscriptions.ForEach(sub =>
-                    NotifySubscription(sub, message.EventName, message.Data));
+            {
+                var result = NotifySubscription(sub, message.EventName, message.Data);
+                if (result != null)
+                {
+                    results.Add(result);
+                }
+            });
+
+            if (results.Any())
+            {
+                SubscriptionService.UpdateResults(results);
+            }
 
             return true;
         }
 
-        private void NotifySubscription<TDto>(SubscriptionConfig subscription, string eventName, TDto data)
+        private SubscriptionDeliveryResult NotifySubscription<TDto>(SubscriptionRelayConfig subscription, string eventName, TDto data)
         {
             ServiceClient.Retries = ServiceClientRetries;
             ServiceClient.Timeout = TimeSpan.FromSeconds(SeviceClientTimeoutSeconds);
-            ServiceClient.Post(subscription, eventName, data);
+            return ServiceClient.Relay(subscription, eventName, data);
         }
     }
 }

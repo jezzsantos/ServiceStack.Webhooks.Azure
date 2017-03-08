@@ -42,7 +42,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
             [Test, Category("Unit")]
             public void WhenSearch_ThenGetsSubscriptionsFromService()
             {
-                var subscribers = new List<SubscriptionConfig>();
+                var subscribers = new List<SubscriptionRelayConfig>();
                 var serviceClient = new Mock<Relays.Clients.IServiceClient>();
                 serviceClient.Setup(sc => sc.Get(It.IsAny<SearchSubscriptions>()))
                     .Returns(new SearchSubscriptionsResponse
@@ -57,6 +57,22 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 Assert.That(results, Is.EqualTo(subscribers));
                 serviceClientFactory.Verify(scf => scf.Create("aurl"));
                 serviceClient.Verify(sc => sc.Get(It.Is<SearchSubscriptions>(ss => ss.EventName == "aneventname")));
+            }
+
+            [Test, Category("Unit")]
+            public void WhenUpdateResults_ThenPutResultsToService()
+            {
+                var results = new List<SubscriptionDeliveryResult>();
+                var serviceClient = new Mock<Relays.Clients.IServiceClient>();
+                serviceClient.Setup(sc => sc.Put(It.IsAny<UpdateSubscriptionHistory>()))
+                    .Returns(new UpdateSubscriptionHistoryResponse());
+                serviceClientFactory.Setup(scf => scf.Create("aurl"))
+                    .Returns(serviceClient.Object);
+
+                client.UpdateResults(results);
+
+                serviceClientFactory.Verify(scf => scf.Create("aurl"));
+                serviceClient.Verify(sc => sc.Put(It.Is<UpdateSubscriptionHistory>(ss => ss.Results == results)));
             }
         }
     }

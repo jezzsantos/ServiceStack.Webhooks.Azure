@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using ServiceStack.Configuration;
@@ -18,6 +19,8 @@ namespace ServiceStack.Webhooks.Azure.IntTests
             private static AppHostForAzureTesting appHost;
             private static JsonServiceClient client;
             private const string BaseUrl = "http://localhost:5567/";
+
+            private static int subscriptionCounter = 1;
             private IAzureQueueStorage<WebhookEvent> queue;
 
             [OneTimeSetUp]
@@ -30,8 +33,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
                 client = new JsonServiceClient(BaseUrl);
 
                 var settings = appHost.Resolve<IAppSettings>();
-                queue = new AzureQueueStorage<WebhookEvent>(settings.GetString(AzureQueueWebhookEventSink.AzureConnectionStringSettingName), settings.GetString(AzureQueueWebhookEventSink.QueueNameSettingName));
-                SetupSubscription("aneventname");
+                queue = new AzureQueueStorage<WebhookEvent>(settings.GetString(AzureQueueEventSink.AzureConnectionStringSettingName), settings.GetString(AzureQueueEventSink.QueueNameSettingName));
             }
 
             [OneTimeTearDown]
@@ -43,8 +45,12 @@ namespace ServiceStack.Webhooks.Azure.IntTests
             [SetUp]
             public void Initialize()
             {
-                client.Put(new ResetConsumedEvents());
+                ((AzureTableSubscriptionStore) appHost.Resolve<ISubscriptionStore>()).Clear();
                 queue.Empty();
+
+                client.Put(new ResetConsumedEvents());
+
+                SetupSubscription("aneventname");
             }
 
             [TearDown]
@@ -72,13 +78,26 @@ namespace ServiceStack.Webhooks.Azure.IntTests
 
                 Assert.That(consumed.Count, Is.EqualTo(1));
                 AssertSunkEvent(consumed[0]);
+            
+                var subscriptionId = client.Get(new ListSubscriptions()).Subscriptions[0].Id;
+
+                var history = client.Get(new GetSubscription
+                {
+                    Id = subscriptionId
+                }).History;
+
+                Assert.That(history.Count, Is.EqualTo(1));
+                Assert.That(history[0].AttemptedDateUtc, Is.EqualTo(DateTime.UtcNow).Within(30).Seconds);
+                Assert.That(history[0].StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+                Assert.That(history[0].StatusDescription, Is.EqualTo("No Content"));
+                Assert.That(history[0].SubscriptionId, Is.EqualTo(subscriptionId));
             }
 
             private static void SetupSubscription(string eventName)
             {
                 client.Post(new CreateSubscription
                 {
-                    Name = "aname",
+                    Name = "aname{0}".Fmt(subscriptionCounter++),
                     Events = new List<string> {eventName},
                     Config = new SubscriptionConfig
                     {
@@ -89,7 +108,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
 
             private static void SetupEvent(string eventName)
             {
-                client.Post(new RaiseEvent
+                client.Put(new RaiseEvent
                 {
                     EventName = eventName,
                     Data = new TestEvent

@@ -15,13 +15,13 @@ namespace ServiceStack.Webhooks.Azure.IntTests.Services
         public override void Configure(Container container)
         {
             LogManager.LogFactory = new ConsoleLogFactory();
-            Plugins.Add(new ValidationFeature());
-
+            Config.DebugMode = true;
+            Config.ReturnsInnerException = true;
             var settings = new AppSettings();
             container.Register<IAppSettings>(settings);
-            container.Register<IWebhookSubscriptionStore>(new AzureTableWebhookSubscriptionStore(settings));
-            container.Register<IWebhookEventSink>(new AzureQueueWebhookEventSink(settings));
-
+            container.Register<ISubscriptionStore>(new AzureTableSubscriptionStore(settings));
+            container.Register<IEventSink>(new AzureQueueEventSink(settings));
+            Plugins.Add(new ValidationFeature());
             Plugins.Add(new WebhookFeature());
         }
     }

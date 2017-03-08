@@ -4,17 +4,17 @@ using NUnit.Framework;
 
 namespace ServiceStack.Webhooks.Azure.IntTests
 {
-    public class AzureQueueWebhookEventSinkSpec
+    public class AzureQueueEventSinkSpec
     {
         [TestFixture]
         public class GivenAQueue : AzureIntegrationTestBase
         {
-            private AzureQueueWebhookEventSink sink;
+            private AzureQueueEventSink sink;
 
             [SetUp]
             public void Initialize()
             {
-                sink = new AzureQueueWebhookEventSink();
+                sink = new AzureQueueEventSink();
                 sink.Clear();
             }
 

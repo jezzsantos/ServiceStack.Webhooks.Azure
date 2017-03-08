@@ -22,13 +22,22 @@ namespace ServiceStack.Webhooks.Azure
 
         public IEventServiceClientFactory ServiceClientFactory { get; set; }
 
-        public List<SubscriptionConfig> Search(string eventName)
+        public List<SubscriptionRelayConfig> Search(string eventName)
         {
             var serviceClient = ServiceClientFactory.Create(SubscriptionsBaseUrl);
             return serviceClient.Get(new SearchSubscriptions
             {
                 EventName = eventName
             }).Subscribers;
+        }
+
+        public void UpdateResults(List<SubscriptionDeliveryResult> results)
+        {
+            var serviceClient = ServiceClientFactory.Create(SubscriptionsBaseUrl);
+            serviceClient.Put(new UpdateSubscriptionHistory
+            {
+                Results = results
+            });
         }
     }
 }

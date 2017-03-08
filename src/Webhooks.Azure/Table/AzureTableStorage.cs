@@ -6,7 +6,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace ServiceStack.Webhooks.Azure.Table
 {
-    internal class AzureTableStorage : IAzureTableStorage
+    internal class AzureTableStorage<TEntity> : IAzureTableStorage<TEntity> where TEntity : TableEntity, new()
     {
         private const int CreationTimeoutSecs = 60;
         private readonly string connectionString;
@@ -25,7 +25,7 @@ namespace ServiceStack.Webhooks.Azure.Table
 
         protected CloudTable Table { get; private set; }
 
-        public void Add(WebhookSubscriptionEntity subscription)
+        public void Add(TEntity subscription)
         {
             Guard.AgainstNull(() => subscription, subscription);
 
@@ -35,17 +35,17 @@ namespace ServiceStack.Webhooks.Azure.Table
             ResetLastCreationCheckTime();
         }
 
-        public WebhookSubscriptionEntity Get(string id)
+        public TEntity Get(string id)
         {
             Guard.AgainstNullOrEmpty(() => id, id);
 
             var entity = Table.Execute(TableOperation.Retrieve<WebhookSubscriptionEntity>(string.Empty, id));
             ResetLastCreationCheckTime();
 
-            return (WebhookSubscriptionEntity) entity.Result;
+            return (TEntity) entity.Result;
         }
 
-        public void Update(WebhookSubscriptionEntity subscription)
+        public void Update(TEntity subscription)
         {
             Guard.AgainstNull(() => subscription, subscription);
 
@@ -55,7 +55,7 @@ namespace ServiceStack.Webhooks.Azure.Table
             ResetLastCreationCheckTime();
         }
 
-        public void Delete(WebhookSubscriptionEntity subscription)
+        public void Delete(TEntity subscription)
         {
             Guard.AgainstNull(() => subscription, subscription);
 
@@ -65,13 +65,13 @@ namespace ServiceStack.Webhooks.Azure.Table
             ResetLastCreationCheckTime();
         }
 
-        public List<WebhookSubscriptionEntity> Find(TableStorageQuery query)
+        public List<TEntity> Find(TableStorageQuery query)
         {
             Guard.AgainstNull(() => query, query);
 
             EnsureTable();
 
-            var queried = Table.ExecuteQuery(new TableQuery<WebhookSubscriptionEntity>()
+            var queried = Table.ExecuteQuery(new TableQuery<TEntity>()
                 .Where(query.Query));
             ResetLastCreationCheckTime();
 
