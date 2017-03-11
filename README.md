@@ -11,11 +11,27 @@ This project makes it very easy to plugin various Azure components to the [Servi
 
 ![](https://raw.githubusercontent.com/jezzsantos/ServiceStack.Webhooks/master/docs/images/Webhooks.Architecture.PNG)
 
-If you cant find the exact component you want for your Azure architecture in this `ServiceStack.Webhooks.Azure` package, it is pretty easy for you to build add your own and _just plug it in_ to your `WebhookFeature`.
+**Note:** If you cant find the exact Azure component you want for your Azure architecture in this `ServiceStack.Webhooks.Azure` project, you can easily build your own and _just plug it in_ to your `WebhookFeature`. See [Building Your Own Plugin](https://github.com/jezzsantos/ServiceStack.Webhooks/wiki/Building-Your-Own-Plugin) for more details on that.
 
 ### Contribute!
 
 Want to get involved in this project? or there is something missing and you want to help improve this capability for your services? just send us a message or pull-request!
+
+## Tables, Queues, WorkerRoles
+
+If you deploy your ServiceStack web service to Microsoft Azure, you may want to use Azure Table Storage, Queues, Buses etc. to allow your app to scale and perform at scale when using webhooks.
+
+For example, 'subscriptions' can be stored in Azure Table Storage, or Azure SQL, 'events' can be queued in Azure Queue Storage,  Function, or Service Bus, and then 'events' can be relayed by a Function, ServiceBus or WorkerRole to subscribers.
+
+In this project, we currently support the following:
+
+* Storing subscriptions in the [`AzureTableSubscriptionStore`](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/blob/master/src/Webhooks.Azure/AzureTableSubscriptionStore.cs)
+* Sinking events in the [`AzureQueueEventSink`](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/blob/master/src/Webhooks.Azure/AzureQueueEventSink.cs)
+* Relaying events from the [`AzureRelayWorker`](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/blob/master/src/Webhooks.Azure/Worker/EventRelayWorker.cs)
+
+It looks like this:
+
+![](https://raw.githubusercontent.com/jezzsantos/ServiceStack.Webhooks.Azure/master/docs/images/Webhooks.Azure.PNG)
 
 # Getting Started
 
@@ -24,13 +40,9 @@ Install from NuGet:
 Install-Package ServiceStack.Webhooks.Azure
 ```
 
-If you deploy your ServiceStack web service to Microsoft Azure, you may want to use Azure storage Tables, Queues, Buses etc. to allow your app to scale and perform at scale when using webhooks.
+## Configuring your Service
 
-For example, 'subscriptions' can be stored in Azure Table Storage, or Azure SQL, 'events' can be queued in Azure Queue Storage,  Function, or Service Bus, and then 'events' can be relayed by a Function, ServiceBus or WorkerRole to subscribers.
-
-![](https://raw.githubusercontent.com/jezzsantos/ServiceStack.Webhooks.Azure/master/docs/images/Webhooks.Azure.PNG)
-
-Add the `WebhookFeature` in your `AppHost.Configure()` method as usual, and register the Azure components:
+Then, add the `WebhookFeature` in your `AppHost.Configure()` method as usual, and register the Azure components:
 
 ```
 public override void Configure(Container container)
@@ -42,7 +54,11 @@ public override void Configure(Container container)
 }
 ```
 
-If you are hosting your web service in an Azure WebRole, you may want to configure the 'subscription store' and the 'event sink' from your cloud configuration (`ServiceConfiguration.cscfg`), instead of using the defaults, or specifying them in code. You would do that by  registering your services like this:
+## Customizing your SubscriptonStore and EventSink
+
+If you are hosting your web service in an Azure WebRole, you may want to customize the 'subscription store' and the 'event sink' from your cloud configuration (`ServiceConfiguration.cscfg`), instead of using the defaults, or specifying them in code. 
+
+You would do that by registering the [`CloudAppSettings`](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/blob/master/src/Webhooks.Azure/Settings/CloudAppSettings.cs) your services like this:
 
 ```
 public override void Configure(Container container)
@@ -57,7 +73,7 @@ public override void Configure(Container container)
 }
 ```
 
-Then, in the 'Cloud' project that you have created for your service, edit the properties of the role you have for your web service.
+Then, in the 'Azure Cloud Service' project that you have created for your service, edit the properties of the role you have for your web service.
 
 Go to the 'Settings' tab and add the following settings:
 
@@ -70,7 +86,6 @@ Go to the 'Settings' tab and add the following settings:
 ## Configuring an Azure WorkerRole Relay
 
 To relay events from an Azure queue, you can deploy an Azure WorkerRole that picks up the events from the 'queue' and relays them to all subscribers.
-Since you are deploying this component to Azure, the configuration for it will likely exist in your Azure configuration (`ServiceConfiguration.cscfg`) file:
 
 This is how to do it:
 
@@ -110,6 +125,10 @@ public class WorkerRole : AzureWorkerRoleEntryPoint
     }
 ```
 
+## Customizing your Azure WorkerRole Relay
+
+Since you are deploying this component to Azure, the configuration for it will likely exist in your Azure configuration (`ServiceConfiguration.cscfg`) file as well:
+
 In the 'Cloud' project that you created, edit the properties of the 'WebhookEventRelay' role.
 
 Go to the 'Settings' tab and add the following settings:
@@ -124,9 +143,9 @@ Go to the 'Settings' tab and add the following settings:
 
 Note: the value of the setting `EventRelayQueueProcessor.TargetQueue.Name` must be the same as the `AzureQueueEventSink.QueueName` that you may have configured in the `WebhookFeature`.
 
-## Configuring Azure Storage Resources
+## Customizing your Azure Storage Resources
 
-By default, these services will use default names for storage table and event queue, and will connect to the local Azure Emulator (UseDevelopmentStorage=true) storage account, which might be fine for you, but you may want to provide different names or connection strings for different deployments.
+By default, the services of this project will use default names for storage table and event queue, and will connect to the local Azure Emulator (UseDevelopmentStorage=true) storage account, which might be fine for you, but you may want to provide different names or connection strings for different deployments.
 
 * `AzureTableSubscriptionStore` will create and use a storage table named: 'webhooksubscriptions'
 * `AzureQueueEventSink` will create and use a storage queue named: 'webhookevents'
@@ -173,6 +192,3 @@ public override void Configure(Container container)
     Plugins.Add(new WebhookFeature();
 }
 ```
-
-
-
