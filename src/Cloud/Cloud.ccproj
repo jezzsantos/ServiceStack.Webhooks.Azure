@@ -21,10 +21,6 @@
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EventRelayWorkerRoleContent\" />
-    <Folder Include="Webhooks.Azure.EventRelayContent\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\EventRelayWorkerRole\EventRelayWorkerRole.csproj">
       <Name>EventRelayWorkerRole</Name>
       <Project>{d89d2381-375c-47b3-9534-0315b7a149d4}</Project>
@@ -33,6 +29,9 @@
       <RoleName>EventRelayWorkerRole</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EventRelayWorkerRoleContent\" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="EventRelayWorkerRoleContent\diagnostics.wadcfgx" />
