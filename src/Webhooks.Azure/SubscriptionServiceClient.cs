@@ -7,7 +7,7 @@ using ServiceStack.Webhooks.ServiceModel.Types;
 
 namespace ServiceStack.Webhooks.Azure
 {
-    internal class SubscriptionServiceClient : ISubscriptionService
+    public class SubscriptionServiceClient : ISubscriptionService
     {
         public const string SubscriptionServiceBaseUrlSettingName = "SubscriptionServiceClient.SubscriptionService.BaseUrl";
 

@@ -25,7 +25,11 @@ namespace ServiceStack.Webhooks.Azure.Worker
         {
             var appSettings = container.Resolve<IAppSettings>();
 
-            container.RegisterAutoWiredAs<MemoryCacheClient, ICacheClient>();
+            if (!container.Exists<ICacheClient>())
+            {
+                container.RegisterAutoWiredAs<MemoryCacheClient, ICacheClient>();
+            }
+
             container.RegisterAutoWiredAs<EventServiceClientFactory, IEventServiceClientFactory>();
             container.Register<ISubscriptionService>(x => new SubscriptionServiceClient(appSettings)
             {

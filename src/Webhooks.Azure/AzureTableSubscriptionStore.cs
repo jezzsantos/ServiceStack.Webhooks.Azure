@@ -9,11 +9,11 @@ namespace ServiceStack.Webhooks.Azure
 {
     public class AzureTableSubscriptionStore : ISubscriptionStore
     {
-        internal const string DefaultSubscriptionTableName = "webhooksubscriptions";
-        internal const string DefaultDeliveryResultsTableName = "webhookdeliveryresults";
-        internal const string AzureConnectionStringSettingName = "AzureTableSubscriptionStore.ConnectionString";
-        internal const string SubscriptionTableNameSettingName = "AzureTableSubscriptionStore.SubscriptionsTable.Name";
-        internal const string DeliveryResultsTableNameSettingName = "AzureTableSubscriptionStore.DeliveryResultsTable.Name";
+        public const string DefaultSubscriptionTableName = "webhooksubscriptions";
+        public const string DefaultDeliveryResultsTableName = "webhookdeliveryresults";
+        public const string AzureConnectionStringSettingName = "AzureTableSubscriptionStore.ConnectionString";
+        public const string SubscriptionTableNameSettingName = "AzureTableSubscriptionStore.SubscriptionsTable.Name";
+        public const string DeliveryResultsTableNameSettingName = "AzureTableSubscriptionStore.DeliveryResultsTable.Name";
         private IAzureTableStorage<SubscriptionDeliveryResultEntity> deliveryResultsTableStorage;
         private IAzureTableStorage<WebhookSubscriptionEntity> subscriptionTableStorage;
 

@@ -14,19 +14,19 @@ namespace ServiceStack.Webhooks.Azure.Worker
     /// </summary>
     public class EventRelayQueueProcessor : BaseQueueProcessor<WebhookEvent>
     {
-        internal const int DefaultServiceClientRetries = 3;
-        internal const int DefaultServiceClientTimeoutSeconds = 60;
-        private const int DefaultPollingIntervalSeconds = 5;
-        internal const int DefaultSubscriptionCacheTimeoutSeconds = 60;
-        private const string DefaultTargetQueueName = AzureQueueEventSink.DefaultQueueName;
-        private const string DefaultUnhandledQueueName = "unhandled" + AzureQueueEventSink.DefaultQueueName;
-        private const string PollingIntervalSettingName = "EventRelayQueueProcessor.Polling.Interval.Seconds";
-        internal const string AzureConnectionStringSettingName = "EventRelayQueueProcessor.ConnectionString";
-        internal const string TargetQueueNameSettingName = "EventRelayQueueProcessor.TargetQueue.Name";
-        internal const string UnhandledQueneNameStringSettingName = "EventRelayQueueProcessor.UnhandledQueue.Name";
-        internal const string SeviceClientRetriesSettingName = "EventRelayQueueProcessor.ServiceClient.Retries";
-        internal const string DefaultSeviceClientTimeoutSettingName = "EventRelayQueueProcessor.ServiceClient.Timeout.Seconds";
-        internal const string DefaultSubscriptionCacheTimeoutSettingsName = "EventRelayQueueProcessor.SubscriptionCache.Timeout.Seconds";
+        public const int DefaultServiceClientRetries = 3;
+        public const int DefaultServiceClientTimeoutSeconds = 60;
+        public const int DefaultPollingIntervalSeconds = 5;
+        public const int DefaultSubscriptionCacheTimeoutSeconds = 60;
+        public const string DefaultTargetQueueName = AzureQueueEventSink.DefaultQueueName;
+        public const string DefaultUnhandledQueueName = "unhandled" + AzureQueueEventSink.DefaultQueueName;
+        public const string PollingIntervalSettingName = "EventRelayQueueProcessor.Polling.Interval.Seconds";
+        public const string AzureConnectionStringSettingName = "EventRelayQueueProcessor.ConnectionString";
+        public const string TargetQueueNameSettingName = "EventRelayQueueProcessor.TargetQueue.Name";
+        public const string UnhandledQueneNameStringSettingName = "EventRelayQueueProcessor.UnhandledQueue.Name";
+        public const string SeviceClientRetriesSettingName = "EventRelayQueueProcessor.ServiceClient.Retries";
+        public const string DefaultSeviceClientTimeoutSettingName = "EventRelayQueueProcessor.ServiceClient.Timeout.Seconds";
+        public const string DefaultSubscriptionCacheTimeoutSettingsName = "EventRelayQueueProcessor.SubscriptionCache.Timeout.Seconds";
 
         private int pollingInterval;
         private IAzureQueueStorage<WebhookEvent> targetQueue;

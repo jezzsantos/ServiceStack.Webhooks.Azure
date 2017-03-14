@@ -7,9 +7,9 @@ namespace ServiceStack.Webhooks.Azure
 {
     public class AzureQueueEventSink : IEventSink
     {
-        internal const string DefaultQueueName = "webhookevents";
-        internal const string AzureConnectionStringSettingName = "AzureQueueEventSink.ConnectionString";
-        internal const string QueueNameSettingName = "AzureQueueEventSink.Queue.Name";
+        public const string DefaultQueueName = "webhookevents";
+        public const string AzureConnectionStringSettingName = "AzureQueueEventSink.ConnectionString";
+        public const string QueueNameSettingName = "AzureQueueEventSink.Queue.Name";
         private IAzureQueueStorage<WebhookEvent> queueStorage;
 
         public AzureQueueEventSink()

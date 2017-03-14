@@ -2,6 +2,6 @@
 {
     public static class AzureStorage
     {
-        internal const string AzureEmulatorConnectionString = @"UseDevelopmentStorage=true";
+        public const string AzureEmulatorConnectionString = @"UseDevelopmentStorage=true";
     }
 }
