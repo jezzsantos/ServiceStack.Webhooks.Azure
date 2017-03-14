@@ -77,11 +77,11 @@ Then, in the 'Azure Cloud Service' project that you have created for your servic
 
 Go to the 'Settings' tab and add the following settings:
 
-* (ConnectionString) AzureTableSubscriptionStore.ConnectionString - The Azure Storage account connection string for your table. For example: UseDevelopmentStorage=true
-* (string) AzureTableSubscriptionStore.SubscriptionsTable.Name - The name of the storage table where subscriptions are stored. For example: webhooksubscriptions
-* (string) AzureTableSubscriptionStore.DeliveryResultsTable.Name - The name of the storage table where delivery results are stored. For example: webhookdeliveryresults
-* (ConnectionString) AzureQueueEventSink.ConnectionString - The Azure Storage account connection string for your queue. For example: UseDevelopmentStorage=true
-* (string) AzureQueueEventSink.Queue.Name - The name of the queue where events will be written. For example: webhookevents
+* (ConnectionString) AzureTableSubscriptionStore.ConnectionString - The Azure Storage account connection string for your table. Default: UseDevelopmentStorage=true
+* (string) AzureTableSubscriptionStore.SubscriptionsTable.Name - The name of the storage table where subscriptions are stored. Default: webhooksubscriptions
+* (string) AzureTableSubscriptionStore.DeliveryResultsTable.Name - The name of the storage table where delivery results are stored. Default: webhookdeliveryresults
+* (ConnectionString) AzureQueueEventSink.ConnectionString - The Azure Storage account connection string for your queue. Default: UseDevelopmentStorage=true
+* (string) AzureQueueEventSink.Queue.Name - The name of the queue where events will be written. Default: webhookevents
 
 ## Configuring an Azure WorkerRole Relay
 
@@ -134,12 +134,12 @@ In the 'Cloud' project that you created, edit the properties of the 'WebhookEven
 Go to the 'Settings' tab and add the following settings:
 
 * (string) SubscriptionServiceClient.SubscriptionService.BaseUrl - The base URL of your webhook subscription service (where the `WebhookFeature` is installed ). For example: http://myserver:80/api
-* (string) EventRelayQueueProcessor.Polling.Interval.Seconds - The interval (in seconds) that the worker role polls the Azure queue for new events. For example: 5
-* (ConnectionString) EventRelayQueueProcessor.ConnectionString - The Azure Storage account connection string. For example: UseDevelopmentStorage=true
-* (string) EventRelayQueueProcessor.TargetQueue.Name - The name of the queue where events will be polled. For example: webhookevents
-* (string) EventRelayQueueProcessor.UnhandledQueue.Name - The name of the queue where failed events are dropped. For example: unhandledwebhookevents
-* (string) EventRelayQueueProcessor.ServiceClient.Retries - The number of retry attempts the relay will make to notify a subscriber before giving up. For example: 3
-* (string) EventRelayQueueProcessor.ServiceClient.Timeout.Seconds - The timeout (in seconds) the relay will wait for the subscriber endpoint before cancelling the notification. For example: 60
+* (string) EventRelayQueueProcessor.Polling.Interval.Seconds - The interval (in seconds) that the worker role polls the Azure queue for new events. Default: 5
+* (ConnectionString) EventRelayQueueProcessor.ConnectionString - The Azure Storage account connection string. Default: UseDevelopmentStorage=true
+* (string) EventRelayQueueProcessor.TargetQueue.Name - The name of the queue where events will be polled. Default: webhookevents
+* (string) EventRelayQueueProcessor.UnhandledQueue.Name - The name of the queue where failed events are dropped. Default: unhandledwebhookevents
+* (string) EventRelayQueueProcessor.ServiceClient.Retries - The number of retry attempts the relay will make to notify a subscriber before giving up. Default: 3
+* (string) EventRelayQueueProcessor.ServiceClient.Timeout.Seconds - The timeout (in seconds) the relay will wait for the subscriber endpoint before cancelling the notification. Default: 60
 
 Note: the value of the setting `EventRelayQueueProcessor.TargetQueue.Name` must be the same as the `AzureQueueEventSink.QueueName` that you may have configured in the `WebhookFeature`.
 
@@ -166,11 +166,11 @@ public override void Configure(Container container)
 ```
 Then for your selected configuration, add these settings:
 
-* (ConnectionString) AzureTableSubscriptionStore.ConnectionString - The storage account for storing subscriptions.
-* (string) AzureTableSubscriptionStore.SubscriptionsTable.Name - The name of the storage table where subscriptions are stored. For example: webhooksubscriptions
-* (string) AzureTableSubscriptionStore.DeliveryResultsTable.Name - The name of the storage table where delivery results are stored. For example: webhookdeliveryresults
-* (ConnectionString) AzureQueueEventSink.ConnectionString - The storage account for storing events.
-* (string) AzureQueueEventSink.Queue.Name - The name of the queue where events are stored before being relayed: For example: webhookevents
+* (ConnectionString) AzureTableSubscriptionStore.ConnectionString - The storage account for storing subscriptions. Default: UseDevelopmentStorage=true
+* (string) AzureTableSubscriptionStore.SubscriptionsTable.Name - The name of the storage table where subscriptions are stored. Default: webhooksubscriptions
+* (string) AzureTableSubscriptionStore.DeliveryResultsTable.Name - The name of the storage table where delivery results are stored. Default: webhookdeliveryresults
+* (ConnectionString) AzureQueueEventSink.ConnectionString - The storage account for storing events. Default: UseDevelopmentStorage=true
+* (string) AzureQueueEventSink.Queue.Name - The name of the queue where events are stored before being relayed: Default: webhookevents
 
 Otherwise, you can set those values directly in code when you register the services:
 
