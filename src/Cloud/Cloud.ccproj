@@ -13,6 +13,7 @@
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>Webhooks.Azure.Cloud</Name>
     <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
+    <SkipCreateNugetPackage>true</SkipCreateNugetPackage>
   </PropertyGroup>
   <Import Project="..\BuildConfiguration.targets" />
   <!-- Items for the project -->

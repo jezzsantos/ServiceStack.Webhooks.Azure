@@ -8,6 +8,7 @@
     <DelaySign>false</DelaySign>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>436</NoWarn>
+    <SkipCreateNugetPackage Condition="'$(SkipCreateNugetPackage)' == ''">false</SkipCreateNugetPackage>
   </PropertyGroup>
 
   <!-- Build flavors for all projects -->
@@ -52,7 +53,7 @@
   </PropertyGroup>
 
   <!-- NuGet Pack all projects that have a .nuspec defined -->
-  <Target Name="CreateNugetPackage" AfterTargets="Build" Condition="'$(Configuration)' == 'ReleaseNoTestDeploy'">
+  <Target Name="CreateNugetPackage" AfterTargets="Build" Condition="'$(Configuration)' == 'ReleaseNoTestDeploy' And '$(SkipCreateNugetPackage)' == 'false'">
     <PropertyGroup>
       <ProjectInfo>$([System.IO.File]::ReadAllText('$(ProjectDir)Properties\AssemblyInfo.cs'))</ProjectInfo>
       <GlobalInfo>$([System.IO.File]::ReadAllText('$(SolutionDir)GlobalAssemblyInfo.cs'))</GlobalInfo>
