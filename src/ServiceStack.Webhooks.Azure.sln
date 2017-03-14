@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhooks.Azure", "Webhooks.Azure\Webhooks.Azure.csproj", "{D32BA10F-0BC5-439D-AFE6-F6AFA0EC99CF}"
 EndProject
@@ -27,6 +27,10 @@ EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Cloud", "Cloud\Cloud.ccproj", "{E976BCF9-0B83-4A8F-9481-4501A1CF1933}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventRelayWorkerRole", "EventRelayWorkerRole\EventRelayWorkerRole.csproj", "{D89D2381-375C-47B3-9534-0315B7A149D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventRelayWorkerRole.Signed", "EventRelayWorkerRole\EventRelayWorkerRole.Signed.csproj", "{DD21E53A-FA3B-4E47-8247-77BE883BDE54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhooks.Azure.Signed", "Webhooks.Azure\Webhooks.Azure.Signed.csproj", "{E770EBE5-B75A-4129-8825-2B49F2E29BA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +75,18 @@ Global
 		{D89D2381-375C-47B3-9534-0315B7A149D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D89D2381-375C-47B3-9534-0315B7A149D4}.ReleaseNoTestDeploy|Any CPU.ActiveCfg = ReleaseNoTestDeploy|Any CPU
 		{D89D2381-375C-47B3-9534-0315B7A149D4}.ReleaseNoTestDeploy|Any CPU.Build.0 = ReleaseNoTestDeploy|Any CPU
+		{DD21E53A-FA3B-4E47-8247-77BE883BDE54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD21E53A-FA3B-4E47-8247-77BE883BDE54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD21E53A-FA3B-4E47-8247-77BE883BDE54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD21E53A-FA3B-4E47-8247-77BE883BDE54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD21E53A-FA3B-4E47-8247-77BE883BDE54}.ReleaseNoTestDeploy|Any CPU.ActiveCfg = ReleaseNoTestDeploy|Any CPU
+		{DD21E53A-FA3B-4E47-8247-77BE883BDE54}.ReleaseNoTestDeploy|Any CPU.Build.0 = ReleaseNoTestDeploy|Any CPU
+		{E770EBE5-B75A-4129-8825-2B49F2E29BA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E770EBE5-B75A-4129-8825-2B49F2E29BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E770EBE5-B75A-4129-8825-2B49F2E29BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E770EBE5-B75A-4129-8825-2B49F2E29BA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E770EBE5-B75A-4129-8825-2B49F2E29BA1}.ReleaseNoTestDeploy|Any CPU.ActiveCfg = ReleaseNoTestDeploy|Any CPU
+		{E770EBE5-B75A-4129-8825-2B49F2E29BA1}.ReleaseNoTestDeploy|Any CPU.Build.0 = ReleaseNoTestDeploy|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

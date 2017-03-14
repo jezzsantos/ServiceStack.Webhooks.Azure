@@ -19,7 +19,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
         private const string StorageStopArgumentsSettingName = @"AzureIntegrationTestBase.AzureStorageStopArguments";
         private const string ComputeStartupArgumentsSettingName = @"AzureIntegrationTestBase.AzureComputeStartupArguments";
         private const string ComputeShutdownArgumentsSettingName = @"AzureIntegrationTestBase.AzureComputeShutdownArguments";
-        private const string TestDeploymentConfigurationDir = @"..\..\TestContent\Cloud\bin";
+        private const string TestDeploymentConfigurationDir = @"..\..\..\TestContent\Cloud\bin";
         private static ILog logger;
         private static readonly IAppSettings Settings = new AppSettings();
 

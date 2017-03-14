@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D32BA10F-0BC5-439D-AFE6-F6AFA0EC99CF}</ProjectGuid>
+    <ProjectGuid>{E770EBE5-B75A-4129-8825-2B49F2E29BA1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ServiceStack.Webhooks.Azure</RootNamespace>
@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <Import Project="..\BuildConfiguration.targets" />
   <ItemGroup>
@@ -65,19 +66,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Webhooks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.1.6.0\lib\net45\ServiceStack.Webhooks.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.Signed.1.7.0\lib\net45\ServiceStack.Webhooks.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Webhooks.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.1.6.0\lib\net45\ServiceStack.Webhooks.Common.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.Signed.1.7.0\lib\net45\ServiceStack.Webhooks.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Webhooks.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.Interfaces.1.6.0\lib\net45\ServiceStack.Webhooks.Interfaces.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.Interfaces.Signed.1.7.0\lib\net45\ServiceStack.Webhooks.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Webhooks.Relays, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.1.6.0\lib\net45\ServiceStack.Webhooks.Relays.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.Signed.1.7.0\lib\net45\ServiceStack.Webhooks.Relays.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -128,7 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.Webhooks.Azure.config" />
+    <None Include="packages.Webhooks.Azure.Signed.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
