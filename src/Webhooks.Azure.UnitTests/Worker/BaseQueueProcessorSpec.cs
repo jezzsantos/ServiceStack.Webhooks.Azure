@@ -91,9 +91,9 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Worker
                 Assert.That(processor.MessageProcessed);
                 Assert.That(processor.ProcessMessageCount, Is.EqualTo(1));
                 unhandledQueueProvider.Verify(uqp => uqp.Enqueue(It.Is<IUnhandledMessage>(um =>
-                        (um.Id == "amessageid")
-                        && (um.MessageType == typeof(TestMessage).Name)
-                        && um.Content.HasValue()
+                    um.Id == "amessageid"
+                    && um.MessageType == typeof(TestMessage).Name
+                    && um.Content.HasValue()
                 )), Times.Once());
             }
 
@@ -117,9 +117,9 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Worker
                 Assert.That(processor.MessageProcessed, Is.False);
                 Assert.That(processor.ProcessMessageCount, Is.EqualTo(1));
                 unhandledQueueProvider.Verify(uqp => uqp.Enqueue(It.Is<IUnhandledMessage>(um =>
-                        (um.Id == "amessageid")
-                        && (um.MessageType == typeof(TestMessage).Name)
-                        && um.Content.HasValue()
+                    um.Id == "amessageid"
+                    && um.MessageType == typeof(TestMessage).Name
+                    && um.Content.HasValue()
                 )), Times.Once());
             }
         }

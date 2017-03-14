@@ -32,11 +32,11 @@ namespace ServiceStack.Webhooks.Azure.Worker
                 ServiceClientFactory = x.Resolve<IEventServiceClientFactory>()
             });
             container.RegisterAutoWiredAs<CacheClientEventSubscriptionCache, IEventSubscriptionCache>();
-            container.Register<IEventSubscriptionCache>(x => new CacheClientEventSubscriptionCache()
+            container.Register<IEventSubscriptionCache>(x => new CacheClientEventSubscriptionCache
             {
                 ExpiryTimeSeconds = appSettings.Get(EventRelayQueueProcessor.DefaultSubscriptionCacheTimeoutSettingsName, EventRelayQueueProcessor.DefaultSubscriptionCacheTimeoutSeconds),
                 SubscriptionService = x.Resolve<ISubscriptionService>(),
-                CacheClient = x.Resolve<ICacheClient>(),
+                CacheClient = x.Resolve<ICacheClient>()
             });
 
             container.RegisterAutoWiredAs<EventServiceClient, IEventServiceClient>();

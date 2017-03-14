@@ -78,7 +78,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
 
                 Assert.That(consumed.Count, Is.EqualTo(1));
                 AssertSunkEvent(consumed[0]);
-            
+
                 var subscriptionId = client.Get(new ListSubscriptions()).Subscriptions[0].Id;
 
                 var history = client.Get(new GetSubscription

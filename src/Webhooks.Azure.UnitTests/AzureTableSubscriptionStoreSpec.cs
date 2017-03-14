@@ -79,7 +79,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 Assert.That(subscription.Id.IsEntityId());
                 Assert.That(subscription.Id, Is.EqualTo(result));
                 subscriptionStorage.Verify(ts => ts.Add(It.Is<WebhookSubscriptionEntity>(wse =>
-                        wse.Id == result)));
+                    wse.Id == result)));
             }
 
             [Test, Category("Unit")]
@@ -99,10 +99,10 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 Assert.That(result.Count, Is.EqualTo(1));
                 Assert.That(result[0].Id, Is.EqualTo("asubscriptionentityid"));
                 subscriptionStorage.Verify(ts => ts.Find(It.Is<TableStorageQuery>(tsq =>
-                    (tsq.Parts.Count == 1)
-                    && (tsq.Parts[0].PropertyName == "CreatedById")
-                    && (tsq.Parts[0].Operation == QueryOperator.EQ)
-                    && (tsq.Parts[0].Value.ToString() == "auserid"))));
+                    tsq.Parts.Count == 1
+                    && tsq.Parts[0].PropertyName == "CreatedById"
+                    && tsq.Parts[0].Operation == QueryOperator.EQ
+                    && tsq.Parts[0].Value.ToString() == "auserid")));
             }
 
             [Test, Category("Unit")]
@@ -127,10 +127,10 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 Assert.That(result[0].Config.Url, Is.EqualTo("aurl"));
                 Assert.That(result[0].SubscriptionId, Is.EqualTo("asubscriptionentityid"));
                 subscriptionStorage.Verify(ts => ts.Find(It.Is<TableStorageQuery>(tsq =>
-                    (tsq.Parts.Count == 1)
-                    && (tsq.Parts[0].PropertyName == "Event")
-                    && (tsq.Parts[0].Operation == QueryOperator.EQ)
-                    && (tsq.Parts[0].Value.ToString() == "aneventname"))));
+                    tsq.Parts.Count == 1
+                    && tsq.Parts[0].PropertyName == "Event"
+                    && tsq.Parts[0].Operation == QueryOperator.EQ
+                    && tsq.Parts[0].Value.ToString() == "aneventname")));
             }
 
             [Test, Category("Unit")]
@@ -165,10 +165,10 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 Assert.That(result[0].Config.Url, Is.EqualTo("aurl2"));
                 Assert.That(result[0].SubscriptionId, Is.EqualTo("asubscriptionentityid2"));
                 subscriptionStorage.Verify(ts => ts.Find(It.Is<TableStorageQuery>(tsq =>
-                    (tsq.Parts.Count == 1)
-                    && (tsq.Parts[0].PropertyName == "Event")
-                    && (tsq.Parts[0].Operation == QueryOperator.EQ)
-                    && (tsq.Parts[0].Value.ToString() == "aneventname"))));
+                    tsq.Parts.Count == 1
+                    && tsq.Parts[0].PropertyName == "Event"
+                    && tsq.Parts[0].Operation == QueryOperator.EQ
+                    && tsq.Parts[0].Value.ToString() == "aneventname")));
             }
 
             [Test, Category("Unit")]
@@ -193,13 +193,13 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
 
                 Assert.That(result.Id, Is.EqualTo("asubscriptionentityid"));
                 subscriptionStorage.Verify(ts => ts.Find(It.Is<TableStorageQuery>(tsq =>
-                        (tsq.Parts.Count == 2)
-                        && (tsq.Parts[0].PropertyName == "CreatedById")
-                        && (tsq.Parts[0].Operation == QueryOperator.EQ)
-                        && (tsq.Parts[0].Value.ToString() == "auserid")
-                        && (tsq.Parts[1].PropertyName == "Event")
-                        && (tsq.Parts[1].Operation == QueryOperator.EQ)
-                        && (tsq.Parts[1].Value.ToString() == "aneventname")
+                    tsq.Parts.Count == 2
+                    && tsq.Parts[0].PropertyName == "CreatedById"
+                    && tsq.Parts[0].Operation == QueryOperator.EQ
+                    && tsq.Parts[0].Value.ToString() == "auserid"
+                    && tsq.Parts[1].PropertyName == "Event"
+                    && tsq.Parts[1].Operation == QueryOperator.EQ
+                    && tsq.Parts[1].Value.ToString() == "aneventname"
                 )));
             }
 
@@ -225,10 +225,10 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
 
                 Assert.That(result.Id, Is.EqualTo("asubscriptionid"));
                 subscriptionStorage.Verify(ts => ts.Find(It.Is<TableStorageQuery>(tsq =>
-                        (tsq.Parts.Count == 1)
-                        && (tsq.Parts[0].PropertyName == "Id")
-                        && (tsq.Parts[0].Operation == QueryOperator.EQ)
-                        && (tsq.Parts[0].Value.ToString() == "asubscriptionid")
+                    tsq.Parts.Count == 1
+                    && tsq.Parts[0].PropertyName == "Id"
+                    && tsq.Parts[0].Operation == QueryOperator.EQ
+                    && tsq.Parts[0].Value.ToString() == "asubscriptionid"
                 )));
             }
 
@@ -270,7 +270,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
 
                 subscriptionStorage.Verify(ts => ts.Get("asubscriptionid"));
                 subscriptionStorage.Verify(ts => ts.Update(It.Is<WebhookSubscriptionEntity>(wse =>
-                        wse.Id == "asubscriptionid")));
+                    wse.Id == "asubscriptionid")));
             }
 
             [Test, Category("Unit")]
@@ -304,21 +304,21 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
 
                 subscriptionStorage.Verify(ts => ts.Get("asubscriptionid"));
                 subscriptionStorage.Verify(ts => ts.Delete(It.Is<WebhookSubscriptionEntity>(wse =>
-                        wse.Id == "asubscriptionid")));
+                    wse.Id == "asubscriptionid")));
             }
 
             [Test, Category("Unit")]
             public void WhenAddDeliveryResultAndNullSubscriptionId_ThenThrows()
             {
                 Assert.Throws<ArgumentNullException>(() =>
-                        store.Add(null, new SubscriptionDeliveryResult()));
+                    store.Add(null, new SubscriptionDeliveryResult()));
             }
 
             [Test, Category("Unit")]
             public void WhenAddDeliveryResultAndNullDeliveryResult_ThenThrows()
             {
                 Assert.Throws<ArgumentNullException>(() =>
-                        store.Add("asubscriptionid", null));
+                    store.Add("asubscriptionid", null));
             }
 
             [Test, Category("Unit")]
@@ -348,22 +348,22 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
 
                 subscriptionStorage.Verify(ss => ss.Find(It.IsAny<TableStorageQuery>()));
                 deliveryResultStorage.Verify(drs => drs.Add(It.Is<SubscriptionDeliveryResultEntity>(dre
-                    => (dre.Id == "aresultid")
-                       && (dre.SubscriptionId == "asubscriptionid"))));
+                    => dre.Id == "aresultid"
+                       && dre.SubscriptionId == "asubscriptionid")));
             }
 
             [Test, Category("Unit")]
             public void WhenSearchForDeliveryResultsWithNullSubscriptionId_ThenThrows()
             {
                 Assert.Throws<ArgumentNullException>(() =>
-                        store.Search(null, 1));
+                    store.Search(null, 1));
             }
 
             [Test, Category("Unit")]
             public void WhenSearchForDeliveryResultsWithZeroTop_ThenThrows()
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() =>
-                        store.Search("asubscriptionid", 0));
+                    store.Search("asubscriptionid", 0));
             }
 
             [Test, Category("Unit")]

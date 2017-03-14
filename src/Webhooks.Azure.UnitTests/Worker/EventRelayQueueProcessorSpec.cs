@@ -94,8 +94,8 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Worker
                 });
 
                 subscriptionService.Verify(ss => ss.UpdateResults(It.Is<List<SubscriptionDeliveryResult>>(results =>
-                    (results.Count == 1)
-                    && (results[0] == result))));
+                    results.Count == 1
+                    && results[0] == result)));
             }
         }
     }

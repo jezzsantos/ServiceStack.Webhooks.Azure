@@ -22,7 +22,7 @@ namespace ServiceStack.Webhooks.Azure.Table
             Parts = new List<QueryPart>(parts);
         }
 
-        public List<QueryPart> Parts { get; private set; }
+        public List<QueryPart> Parts { get; }
 
         public string Query
         {

@@ -119,7 +119,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Worker
             get { return Stopped; }
         }
 
-        public List<WorkerEntryPoint> WorkersInternal { get; private set; }
+        public List<WorkerEntryPoint> WorkersInternal { get; }
 
         protected override IEnumerable<WorkerEntryPoint> Workers
         {

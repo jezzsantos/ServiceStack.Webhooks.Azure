@@ -25,7 +25,7 @@ namespace ServiceStack.Webhooks.Azure.Settings
             ClearCache();
         }
 
-        internal IDictionary<string, string> CachedSettings { get; private set; }
+        internal IDictionary<string, string> CachedSettings { get; }
 
         /// <summary>
         ///     Returns the setting with the specified name

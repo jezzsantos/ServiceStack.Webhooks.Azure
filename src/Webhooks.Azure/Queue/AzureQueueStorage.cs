@@ -13,7 +13,6 @@ namespace ServiceStack.Webhooks.Azure.Queue
         private readonly string connectionString;
         private readonly object mutex = new object();
 
-        private readonly string queueName;
         private DateTime lastCreationCheck = DateTime.MinValue;
 
         public AzureQueueStorage(string connectionString, string queueName)
@@ -21,16 +20,13 @@ namespace ServiceStack.Webhooks.Azure.Queue
             Guard.AgainstNullOrEmpty(() => connectionString, connectionString);
             Guard.AgainstNullOrEmpty(() => queueName, queueName);
 
-            this.queueName = queueName;
+            QueueName = queueName;
             this.connectionString = connectionString;
         }
 
         protected CloudQueue Queue { get; private set; }
 
-        public string QueueName
-        {
-            get { return queueName; }
-        }
+        public string QueueName { get; }
 
         public void Enqueue(TEntity entity)
         {
@@ -102,7 +98,7 @@ namespace ServiceStack.Webhooks.Azure.Queue
             {
                 var storageAccount = CloudStorageAccount.Parse(connectionString);
                 var client = storageAccount.CreateCloudQueueClient();
-                Queue = client.GetQueueReference(queueName);
+                Queue = client.GetQueueReference(QueueName);
                 InitLastCreationCheckTime();
             }
 

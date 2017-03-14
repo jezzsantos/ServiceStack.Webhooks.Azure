@@ -126,7 +126,7 @@ namespace ServiceStack.Webhooks.Azure
             return SubscriptionStorage.Find(new TableStorageQuery(@"Event", QueryOperator.EQ, eventName))
                 .ConvertAll(entity => entity.FromEntity())
                 .Where(sub => !isActive.HasValue
-                              || (sub.IsActive == isActive.Value))
+                              || sub.IsActive == isActive.Value)
                 .Select(sub => new SubscriptionRelayConfig
                 {
                     SubscriptionId = sub.Id,

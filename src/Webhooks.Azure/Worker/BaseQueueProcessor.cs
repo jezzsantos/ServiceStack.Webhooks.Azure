@@ -27,7 +27,7 @@ namespace ServiceStack.Webhooks.Azure.Worker
             return () =>
             {
                 var nextMessages = TargetQueue.RemoveMessages(100);
-                if ((nextMessages != null) && nextMessages.Any())
+                if (nextMessages != null && nextMessages.Any())
                 {
                     logger.Info(@"Processing {0} messages from queue {1}".Fmt(nextMessages.Count, TargetQueue.QueueName));
 

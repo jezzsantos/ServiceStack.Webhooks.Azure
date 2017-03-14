@@ -55,10 +55,10 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 sink.Write("aneventname", new Dictionary<string, string> {{"akey", "avalue"}});
 
                 queueStorage.Verify(qs => qs.Enqueue(It.Is<WebhookEvent>(whe =>
-                        (whe.EventName == "aneventname")
-                        && (whe.Data["akey"] == "avalue")
-                        && whe.CreatedDateUtc.IsNear(DateTime.UtcNow)
-                        && whe.Id.IsEntityId()
+                    whe.EventName == "aneventname"
+                    && whe.Data["akey"] == "avalue"
+                    && whe.CreatedDateUtc.IsNear(DateTime.UtcNow)
+                    && whe.Id.IsEntityId()
                 )));
             }
 

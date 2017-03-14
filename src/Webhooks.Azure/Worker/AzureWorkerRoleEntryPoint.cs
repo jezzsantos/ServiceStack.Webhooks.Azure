@@ -79,7 +79,7 @@ namespace ServiceStack.Webhooks.Azure.Worker
             var workerName = GetType().FullName;
             logger.Info("{0}.RunAsync Running all workers".Fmt(workerName));
 
-            if ((Workers == null) || !Workers.Any())
+            if (Workers == null || !Workers.Any())
             {
                 logger.Info("{0}.RunAsync No Workers to run".Fmt(workerName));
             }
