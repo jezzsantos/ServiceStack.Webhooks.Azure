@@ -60,6 +60,23 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
             }
 
             [Test, Category("Unit")]
+            public void WhenSearchAndRequiresAuthenticationCalled_ThenExecutesHandler()
+            {
+                var serviceClient = new Mock<Relays.Clients.IServiceClient>();
+                serviceClient.SetupProperty(sc => sc.OnAuthenticationRequired);
+                serviceClient.Setup(sc => sc.Get(It.IsAny<SearchSubscriptions>()))
+                    .Returns(new SearchSubscriptionsResponse())
+                    .Callback(() => { serviceClient.Object.OnAuthenticationRequired(); });
+                serviceClientFactory.Setup(scf => scf.Create("aurl"))
+                    .Returns(serviceClient.Object);
+                client.OnAuthenticationRequired = sc => { sc.BearerToken = "abearertoken"; };
+
+                client.Search("aneventname");
+
+                serviceClient.VerifySet(sc => sc.BearerToken = "abearertoken");
+            }
+
+            [Test, Category("Unit")]
             public void WhenUpdateResults_ThenPutResultsToService()
             {
                 var results = new List<SubscriptionDeliveryResult>();
@@ -73,6 +90,23 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
 
                 serviceClientFactory.Verify(scf => scf.Create("aurl"));
                 serviceClient.Verify(sc => sc.Put(It.Is<UpdateSubscriptionHistory>(ss => ss.Results == results)));
+            }
+
+            [Test, Category("Unit")]
+            public void WhenUpdateResultsAndRequiresAuthenticationCalled_ThenExecutesHandler()
+            {
+                var serviceClient = new Mock<Relays.Clients.IServiceClient>();
+                serviceClient.SetupProperty(sc => sc.OnAuthenticationRequired);
+                serviceClient.Setup(sc => sc.Put(It.IsAny<UpdateSubscriptionHistory>()))
+                    .Returns(new UpdateSubscriptionHistoryResponse())
+                    .Callback(() => { serviceClient.Object.OnAuthenticationRequired(); });
+                serviceClientFactory.Setup(scf => scf.Create("aurl"))
+                    .Returns(serviceClient.Object);
+                client.OnAuthenticationRequired = sc => { sc.BearerToken = "abearertoken"; };
+
+                client.UpdateResults(new List<SubscriptionDeliveryResult>());
+
+                serviceClient.VerifySet(sc => sc.BearerToken = "abearertoken");
             }
         }
     }

@@ -66,19 +66,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Webhooks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.Signed.1.7.0\lib\net45\ServiceStack.Webhooks.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.Signed.1.7.1\lib\net45\ServiceStack.Webhooks.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Webhooks.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.Signed.1.7.0\lib\net45\ServiceStack.Webhooks.Common.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.Signed.1.7.1\lib\net45\ServiceStack.Webhooks.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Webhooks.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.Interfaces.Signed.1.7.0\lib\net45\ServiceStack.Webhooks.Interfaces.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.Interfaces.Signed.1.7.1\lib\net45\ServiceStack.Webhooks.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ServiceStack.Webhooks.Relays, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.Signed.1.7.0\lib\net45\ServiceStack.Webhooks.Relays.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.Signed.1.7.1\lib\net45\ServiceStack.Webhooks.Relays.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

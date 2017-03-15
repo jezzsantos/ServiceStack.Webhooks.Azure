@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ServiceStack.Configuration;
 using ServiceStack.Webhooks.Relays;
 using ServiceStack.Webhooks.Relays.Clients;
@@ -22,9 +23,15 @@ namespace ServiceStack.Webhooks.Azure
 
         public IEventServiceClientFactory ServiceClientFactory { get; set; }
 
+        public Action<Relays.Clients.IServiceClient> OnAuthenticationRequired { get; set; }
+
         public List<SubscriptionRelayConfig> Search(string eventName)
         {
             var serviceClient = ServiceClientFactory.Create(SubscriptionsBaseUrl);
+            if (OnAuthenticationRequired != null)
+            {
+                serviceClient.OnAuthenticationRequired = () => OnAuthenticationRequired(serviceClient);
+            }
             return serviceClient.Get(new SearchSubscriptions
             {
                 EventName = eventName
@@ -34,6 +41,10 @@ namespace ServiceStack.Webhooks.Azure
         public void UpdateResults(List<SubscriptionDeliveryResult> results)
         {
             var serviceClient = ServiceClientFactory.Create(SubscriptionsBaseUrl);
+            if (OnAuthenticationRequired != null)
+            {
+                serviceClient.OnAuthenticationRequired = () => OnAuthenticationRequired(serviceClient);
+            }
             serviceClient.Put(new UpdateSubscriptionHistory
             {
                 Results = results
