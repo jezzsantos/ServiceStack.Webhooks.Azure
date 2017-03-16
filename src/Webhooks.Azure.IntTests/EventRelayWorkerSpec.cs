@@ -115,7 +115,12 @@ namespace ServiceStack.Webhooks.Azure.IntTests
                     {
                         A = 1,
                         B = 2,
-                        C = 3
+                        C = new NestedTestEvent
+                        {
+                            D = 3,
+                            E = 4,
+                            F = 5
+                        }
                     }
                 });
             }
@@ -125,7 +130,9 @@ namespace ServiceStack.Webhooks.Azure.IntTests
                 Assert.That(consumedEvent.EventName, Is.EqualTo("aneventname"));
                 Assert.That(consumedEvent.Data.A, Is.EqualTo("1"));
                 Assert.That(consumedEvent.Data.B, Is.EqualTo("2"));
-                Assert.That(consumedEvent.Data.C, Is.EqualTo("3"));
+                Assert.That(consumedEvent.Data.C.D, Is.EqualTo("3"));
+                Assert.That(consumedEvent.Data.C.E, Is.EqualTo("4"));
+                Assert.That(consumedEvent.Data.C.F, Is.EqualTo("5"));
             }
 
             private static void WaitFor(int seconds)

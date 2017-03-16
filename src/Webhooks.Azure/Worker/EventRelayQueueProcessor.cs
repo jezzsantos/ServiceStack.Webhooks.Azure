@@ -92,13 +92,13 @@ namespace ServiceStack.Webhooks.Azure.Worker
 
         public int SeviceClientTimeoutSeconds { get; set; }
 
-        public override bool ProcessMessage(WebhookEvent message)
+        public override bool ProcessMessage(WebhookEvent webhookEvent)
         {
-            var subscriptions = SubscriptionCache.GetAll(message.EventName);
+            var subscriptions = SubscriptionCache.GetAll(webhookEvent.EventName);
             var results = new List<SubscriptionDeliveryResult>();
             subscriptions.ForEach(sub =>
             {
-                var result = NotifySubscription(sub, message.EventName, message.Data);
+                var result = NotifySubscription(sub, webhookEvent);
                 if (result != null)
                 {
                     results.Add(result);
@@ -113,11 +113,11 @@ namespace ServiceStack.Webhooks.Azure.Worker
             return true;
         }
 
-        private SubscriptionDeliveryResult NotifySubscription<TDto>(SubscriptionRelayConfig subscription, string eventName, TDto data)
+        private SubscriptionDeliveryResult NotifySubscription(SubscriptionRelayConfig subscription, WebhookEvent webhookEvent)
         {
             ServiceClient.Retries = ServiceClientRetries;
             ServiceClient.Timeout = TimeSpan.FromSeconds(SeviceClientTimeoutSeconds);
-            return ServiceClient.Relay(subscription, eventName, data);
+            return ServiceClient.Relay(subscription, webhookEvent);
         }
     }
 }

@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using NUnit.Framework;
+using ServiceStack.Text;
 
 namespace ServiceStack.Webhooks.Azure.IntTests
 {
@@ -21,15 +20,30 @@ namespace ServiceStack.Webhooks.Azure.IntTests
             [Test, Category("Integration")]
             public void WhenCreate_ThenQueuesEvent()
             {
-                sink.Write("aneventname", new Dictionary<string, string> {{"akey", "avalue"}});
+                var id = DataFormats.CreateEntityIdentifier();
+                var datum = SystemTime.UtcNow.ToNearestMillisecond();
+                var data = new TestData();
+
+                sink.Write(new WebhookEvent
+                {
+                    CreatedDateUtc = datum,
+                    EventName = "aneventname",
+                    Data = data,
+                    Id = id
+                });
 
                 var result = sink.Peek();
 
                 Assert.That(result.Count, Is.EqualTo(1));
-                Assert.That(result[0].CreatedDateUtc, Is.EqualTo(DateTime.UtcNow).Within(1).Seconds);
+                Assert.That(result[0].CreatedDateUtc, Is.EqualTo(datum));
                 Assert.That(result[0].EventName, Is.EqualTo("aneventname"));
-                Assert.That(result[0].Data, Is.EqualTo(new Dictionary<string, string> {{"akey", "avalue"}}));
+                Assert.That(result[0].Data, Is.EqualTo(new TestData().ToJson()));
+                Assert.That(result[0].Id, Is.EqualTo(id));
             }
         }
+    }
+
+    public class TestData
+    {
     }
 }

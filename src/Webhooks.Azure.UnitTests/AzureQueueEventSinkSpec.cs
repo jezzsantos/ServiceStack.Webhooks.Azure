@@ -52,13 +52,20 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
             [Test, Category("Unit")]
             public void WhenCreate_ThenCreatesEvent()
             {
-                sink.Write("aneventname", new Dictionary<string, string> {{"akey", "avalue"}});
+                var data = new TestData {AProperty = "avalue"};
+                sink.Write(new WebhookEvent
+                {
+                    EventName = "aneventname",
+                    Id = "anid",
+                    CreatedDateUtc = DateTime.UtcNow,
+                    Data = data
+                });
 
                 queueStorage.Verify(qs => qs.Enqueue(It.Is<WebhookEvent>(whe =>
                     whe.EventName == "aneventname"
-                    && whe.Data["akey"] == "avalue"
+                    && whe.Data.ToString() == new TestData {AProperty = "avalue"}.ToJson()
                     && whe.CreatedDateUtc.IsNear(DateTime.UtcNow)
-                    && whe.Id.IsEntityId()
+                    && whe.Id == "anid"
                 )));
             }
 
@@ -83,5 +90,10 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 queueStorage.Verify(qs => qs.Empty());
             }
         }
+    }
+
+    public class TestData
+    {
+        public string AProperty { get; set; }
     }
 }

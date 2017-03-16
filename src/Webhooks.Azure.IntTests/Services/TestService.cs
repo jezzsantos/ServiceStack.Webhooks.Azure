@@ -24,6 +24,15 @@
 
         public object B { get; set; }
 
-        public object C { get; set; }
+        public NestedTestEvent C { get; set; }
+    }
+
+    public class NestedTestEvent
+    {
+        public object D { get; set; }
+
+        public object E { get; set; }
+
+        public object F { get; set; }
     }
 }

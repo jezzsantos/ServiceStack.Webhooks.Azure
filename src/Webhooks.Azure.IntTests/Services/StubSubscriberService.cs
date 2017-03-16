@@ -53,7 +53,16 @@ namespace ServiceStack.Webhooks.Azure.IntTests.Services
 
         public object B { get; set; }
 
-        public object C { get; set; }
+        public NestedConsumeEvent C { get; set; }
+    }
+
+    public class NestedConsumeEvent
+    {
+        public object D { get; set; }
+
+        public object E { get; set; }
+
+        public object F { get; set; }
     }
 
     public class ConsumedEvent

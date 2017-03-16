@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ServiceStack.Configuration;
 using ServiceStack.Webhooks.Azure.Queue;
 
@@ -41,17 +40,12 @@ namespace ServiceStack.Webhooks.Azure
 
         public string QueueName { get; set; }
 
-        public void Write(string eventName, Dictionary<string, string> data)
+        public void Write(WebhookEvent webhookEvent)
         {
-            Guard.AgainstNullOrEmpty(() => eventName, eventName);
+            Guard.AgainstNull(() => webhookEvent, webhookEvent);
 
-            QueueStorage.Enqueue(new WebhookEvent
-            {
-                Id = DataFormats.CreateEntityIdentifier(),
-                EventName = eventName,
-                Data = data,
-                CreatedDateUtc = DateTime.UtcNow.ToNearestMillisecond()
-            });
+            webhookEvent.Data = webhookEvent.Data.ToSafeJson();
+            QueueStorage.Enqueue(webhookEvent);
         }
 
         public List<WebhookEvent> Peek()

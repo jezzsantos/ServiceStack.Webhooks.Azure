@@ -47,7 +47,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Worker
 
                 Assert.That(result, Is.True);
                 subscriptionCache.Verify(sc => sc.GetAll("aneventname"));
-                serviceClient.Verify(sc => sc.Relay(It.IsAny<SubscriptionRelayConfig>(), It.IsAny<string>(), It.IsAny<object>()), Times.Never);
+                serviceClient.Verify(sc => sc.Relay(It.IsAny<SubscriptionRelayConfig>(), It.IsAny<WebhookEvent>()), Times.Never);
             }
 
             [Test, Category("Unit")]
@@ -63,14 +63,17 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Worker
                 var result = processor.ProcessMessage(new WebhookEvent
                 {
                     EventName = "aneventname",
-                    Data = new Dictionary<string, string> {{"akey", "avalue"}}
+                    Data = "adata"
                 });
 
                 Assert.That(result, Is.True);
                 subscriptionCache.Verify(sc => sc.GetAll("aneventname"));
                 serviceClient.VerifySet(sc => sc.Retries = EventRelayQueueProcessor.DefaultServiceClientRetries);
                 serviceClient.VerifySet(sc => sc.Timeout = TimeSpan.FromSeconds(EventRelayQueueProcessor.DefaultServiceClientTimeoutSeconds));
-                serviceClient.Verify(sc => sc.Relay(config, "aneventname", It.Is<Dictionary<string, string>>(dic => dic["akey"] == "avalue")));
+                serviceClient.Verify(sc => sc.Relay(config, It.Is<WebhookEvent>(whe =>
+                    whe.Data.ToString() == "adata"
+                    && whe.EventName == "aneventname"
+                )));
             }
 
             [Test, Category("Unit")]
@@ -82,9 +85,8 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Worker
                     {
                         config
                     });
-                var data = new Dictionary<string, string> {{"akey", "avalue"}};
                 var result = new SubscriptionDeliveryResult();
-                serviceClient.Setup(sc => sc.Relay(config, "aneventname", data))
+                serviceClient.Setup(sc => sc.Relay(config, It.IsAny<WebhookEvent>()))
                     .Returns(result);
 
                 processor.ProcessMessage(new WebhookEvent
