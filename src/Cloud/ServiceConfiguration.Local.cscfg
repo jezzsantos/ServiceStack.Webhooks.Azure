@@ -5,12 +5,12 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="SubscriptionServiceClient.SubscriptionService.BaseUrl" value="http://localhost:5567/" />
-      <Setting name="EventRelayQueueProcessor.Polling.Interval.Seconds" value="5" />
+      <Setting name="EventRelayQueueProcessor.Polling.Interval.Seconds" value="1" />
       <Setting name="EventRelayQueueProcessor.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="EventRelayQueueProcessor.TargetQueue.Name" value="webhookevents" />
       <Setting name="EventRelayQueueProcessor.UnhandledQueue.Name" value="unhandledwebhookevents" />
       <Setting name="EventRelayQueueProcessor.ServiceClient.Retries" value="3" />
-      <Setting name="EventRelayQueueProcessor.ServiceClient.Timeout.Seconds" value="2" />
+      <Setting name="EventRelayQueueProcessor.ServiceClient.Timeout.Seconds" value="60" />
       <Setting name="EventRelayQueueProcessor.SubscriptionCache.Timeout.Seconds" value="2" />
     </ConfigurationSettings>
   </Role>
