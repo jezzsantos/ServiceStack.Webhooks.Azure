@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using ServiceStack.Configuration;
 
 namespace ServiceStack.Webhooks.Azure.Settings
@@ -57,11 +58,27 @@ namespace ServiceStack.Webhooks.Azure.Settings
 
         public T Get<T>(string name)
         {
+            var setting = GetString(name);
+
+            var converter = TypeDescriptor.GetConverter(typeof(T));
+            if (converter.IsValid(setting))
+            {
+                return (T) converter.ConvertFromString(setting);
+            }
+
             return default(T);
         }
 
         public T Get<T>(string name, T defaultValue)
         {
+            var setting = GetString(name);
+
+            var converter = TypeDescriptor.GetConverter(typeof(T));
+            if (converter.IsValid(setting))
+            {
+                return (T) converter.ConvertFromString(setting);
+            }
+
             return defaultValue;
         }
     }

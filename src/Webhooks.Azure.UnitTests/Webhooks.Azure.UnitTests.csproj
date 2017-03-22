@@ -119,6 +119,7 @@
     <Compile Include="AzureQueueEventSinkSpec.cs" />
     <Compile Include="AzureTableSubscriptionStoreSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\CloudAppSettingsSpec.cs" />
     <Compile Include="Settings\CloudConfigurationSettingsSpec.cs" />
     <Compile Include="SubscriptionServiceClientSpec.cs" />
     <Compile Include="Table\TableStorageQuerySpec.cs" />
