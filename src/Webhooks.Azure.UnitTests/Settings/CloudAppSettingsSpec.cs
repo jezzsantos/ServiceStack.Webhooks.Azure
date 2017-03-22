@@ -101,7 +101,18 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Settings
             }
 
             [Test, Category("Unit")]
-            public void WhenGetAsString_ThenReturnsString()
+            public void WhenGetAsStringAndNotExists_ThenReturnsNull()
+            {
+                provider.Setup(prov => prov.GetSetting("akey"))
+                    .Returns((string) null);
+
+                var result = settings.Get<string>("akey");
+
+                Assert.That(result, Is.Null);
+            }
+
+            [Test, Category("Unit")]
+            public void WhenGetAsStringAndExists_ThenReturnsStringValue()
             {
                 var result = settings.Get<string>("akey");
 
@@ -150,6 +161,28 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Settings
                 var result = settings.Get("akey", 9);
 
                 Assert.That(result, Is.EqualTo(1));
+            }
+
+            [Test, Category("Unit")]
+            public void WhenGetWithDefaultAndNotExists_ThenReturnsDefault()
+            {
+                provider.Setup(prov => prov.GetSetting("akey"))
+                    .Returns((string) null);
+
+                var result = settings.Get("akey", "adefault");
+
+                Assert.That(result, Is.EqualTo("adefault"));
+            }
+
+            [Test, Category("Unit")]
+            public void WhenGetWithDefaultAndExists_ThenReturnsValue()
+            {
+                provider.Setup(prov => prov.GetSetting("akey"))
+                    .Returns("avalue");
+
+                var result = settings.Get("akey", "adefault");
+
+                Assert.That(result, Is.EqualTo("avalue"));
             }
         }
     }

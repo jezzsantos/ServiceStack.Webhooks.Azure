@@ -58,20 +58,16 @@ namespace ServiceStack.Webhooks.Azure.Settings
 
         public T Get<T>(string name)
         {
-            var setting = GetString(name);
-
-            var converter = TypeDescriptor.GetConverter(typeof(T));
-            if (converter.IsValid(setting))
-            {
-                return (T) converter.ConvertFromString(setting);
-            }
-
-            return default(T);
+            return Get(name, default(T));
         }
 
         public T Get<T>(string name, T defaultValue)
         {
             var setting = GetString(name);
+            if (setting == null)
+            {
+                return defaultValue;
+            }
 
             var converter = TypeDescriptor.GetConverter(typeof(T));
             if (converter.IsValid(setting))
