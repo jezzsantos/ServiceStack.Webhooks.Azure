@@ -83,6 +83,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 var result = store.ConnectionString;
 
                 Assert.That(result, Is.EqualTo("aconnectionstring"));
+                settings.Verify(s => s.Get(AzureTableSubscriptionStore.AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString));
             }
 
             [Test, Category("Unit")]

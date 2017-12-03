@@ -40,6 +40,15 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
             }
 
             [Test, Category("Unit")]
+            public void WhenSubscriptionsBaseUrl_ThenReadsFromSettings()
+            {
+                var result = client.SubscriptionsBaseUrl;
+
+                Assert.That(result, Is.EqualTo("aurl"));
+                settings.Verify(s => s.GetString(SubscriptionServiceClient.SubscriptionServiceBaseUrlSettingName));
+            }
+
+            [Test, Category("Unit")]
             public void WhenSearch_ThenGetsSubscriptionsFromService()
             {
                 var subscribers = new List<SubscriptionRelayConfig>();

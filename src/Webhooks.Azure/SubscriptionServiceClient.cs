@@ -11,15 +11,25 @@ namespace ServiceStack.Webhooks.Azure
     public class SubscriptionServiceClient : ISubscriptionService
     {
         public const string SubscriptionServiceBaseUrlSettingName = "SubscriptionServiceClient.SubscriptionService.BaseUrl";
+        private readonly IAppSettings settings;
+        private string subscriptionsBaseUrl;
 
         public SubscriptionServiceClient(IAppSettings settings)
         {
             Guard.AgainstNull(() => settings, settings);
+            this.settings = settings;
 
-            SubscriptionsBaseUrl = settings.GetString(SubscriptionServiceBaseUrlSettingName);
+            subscriptionsBaseUrl = settings.GetString(SubscriptionServiceBaseUrlSettingName);
         }
 
-        public string SubscriptionsBaseUrl { get; set; }
+        public virtual string SubscriptionsBaseUrl
+        {
+            get
+            {
+                subscriptionsBaseUrl = settings.GetString(SubscriptionServiceBaseUrlSettingName);
+                return subscriptionsBaseUrl;
+            }
+        }
 
         public IEventServiceClientFactory ServiceClientFactory { get; set; }
 

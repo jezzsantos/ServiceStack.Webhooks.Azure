@@ -70,6 +70,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 var result = sink.ConnectionString;
 
                 Assert.That(result, Is.EqualTo("aconnectionstring"));
+                settings.Verify(s => s.Get(AzureQueueEventSink.AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString));
             }
 
             [Test, Category("Unit")]
