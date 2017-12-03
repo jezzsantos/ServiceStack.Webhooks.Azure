@@ -7,6 +7,8 @@ namespace ServiceStack.Webhooks.Azure.Table
     {
         public string Id { get; set; }
 
+        public string EventId { get; set; }
+
         public DateTime AttemptedDateUtc { get; set; }
 
         public string StatusCode { get; set; }

@@ -91,6 +91,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
                 Assert.That(history[0].StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
                 Assert.That(history[0].StatusDescription, Is.EqualTo("No Content"));
                 Assert.That(history[0].SubscriptionId, Is.EqualTo(subscriptionId));
+                Assert.That(history[0].EventId, Is.Not.Empty);
             }
 
             private static void SetupSubscription(string eventName)
