@@ -50,6 +50,29 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
             }
 
             [Test, Category("Unit")]
+            public void WhenConnectionStringWithNoSettings_ThenReturnsDefault()
+            {
+                sink = new AzureQueueEventSink();
+
+                var result = sink.ConnectionString;
+
+                Assert.That(result, Is.EqualTo(AzureStorage.AzureEmulatorConnectionString));
+            }
+
+            [Test, Category("Unit")]
+            public void WhenConnectionStringWithSettings_ThenReturnsSetting()
+            {
+                var settings = new Mock<IAppSettings>();
+                settings.Setup(s => s.Get(AzureQueueEventSink.AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString))
+                    .Returns("aconnectionstring");
+                sink = new AzureQueueEventSink(settings.Object);
+
+                var result = sink.ConnectionString;
+
+                Assert.That(result, Is.EqualTo("aconnectionstring"));
+            }
+
+            [Test, Category("Unit")]
             public void WhenCreate_ThenCreatesEvent()
             {
                 var data = new TestData {AProperty = "avalue"};

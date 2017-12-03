@@ -30,7 +30,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 store = new AzureTableSubscriptionStore
                 {
                     SubscriptionStorage = subscriptionStorage.Object,
-                    DeliveryResultsStorage = deliveryResultStorage.Object
+                    DeliveryResultsStorage = deliveryResultStorage.Object,
                 };
             }
 
@@ -60,6 +60,29 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 Assert.That(store.SubscriptionTableName, Is.EqualTo("atablename1"));
                 Assert.That(store.DeliveryResultsTableName, Is.EqualTo("atablename2"));
                 Assert.That(store.ConnectionString, Is.EqualTo("aconnectionstring"));
+            }
+
+            [Test, Category("Unit")]
+            public void WhenConnectionStringWithNoSettings_ThenReturnsDefault()
+            {
+                this.store = new AzureTableSubscriptionStore();
+
+                var result = store.ConnectionString;
+
+                Assert.That(result, Is.EqualTo(AzureStorage.AzureEmulatorConnectionString));
+            }
+
+            [Test, Category("Unit")]
+            public void WhenConnectionStringWithSettings_ThenReturnsSetting()
+            {
+                var settings = new Mock<IAppSettings>();
+                settings.Setup(s => s.Get(AzureTableSubscriptionStore.AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString))
+                    .Returns("aconnectionstring");
+                this.store = new AzureTableSubscriptionStore(settings.Object);
+
+                var result = store.ConnectionString;
+
+                Assert.That(result, Is.EqualTo("aconnectionstring"));
             }
 
             [Test, Category("Unit")]

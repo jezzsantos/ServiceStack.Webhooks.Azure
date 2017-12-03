@@ -14,6 +14,8 @@ namespace ServiceStack.Webhooks.Azure
         public const string AzureConnectionStringSettingName = "AzureTableSubscriptionStore.ConnectionString";
         public const string SubscriptionTableNameSettingName = "AzureTableSubscriptionStore.SubscriptionsTable.Name";
         public const string DeliveryResultsTableNameSettingName = "AzureTableSubscriptionStore.DeliveryResultsTable.Name";
+        private readonly IAppSettings settings;
+        private string connectionString;
         private IAzureTableStorage<SubscriptionDeliveryResultEntity> deliveryResultsTableStorage;
         private IAzureTableStorage<WebhookSubscriptionEntity> subscriptionTableStorage;
 
@@ -22,16 +24,17 @@ namespace ServiceStack.Webhooks.Azure
             SubscriptionTableName = DefaultSubscriptionTableName;
             DeliveryResultsTableName = DefaultDeliveryResultsTableName;
 
-            ConnectionString = AzureStorage.AzureEmulatorConnectionString;
+            connectionString = AzureStorage.AzureEmulatorConnectionString;
         }
 
         public AzureTableSubscriptionStore(IAppSettings settings) : this()
         {
             Guard.AgainstNull(() => settings, settings);
+            this.settings = settings;
 
             SubscriptionTableName = settings.Get(SubscriptionTableNameSettingName, DefaultSubscriptionTableName);
             DeliveryResultsTableName = settings.Get(DeliveryResultsTableNameSettingName, DefaultDeliveryResultsTableName);
-            ConnectionString = settings.Get(AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString);
+            connectionString = settings.Get(AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString);
         }
 
         /// <summary>
@@ -52,7 +55,17 @@ namespace ServiceStack.Webhooks.Azure
             set { deliveryResultsTableStorage = value; }
         }
 
-        public string ConnectionString { get; set; }
+        public virtual string ConnectionString
+        {
+            get
+            {
+                if (settings != null)
+                {
+                    connectionString = settings.Get(AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString);
+                }
+                return connectionString;
+            }
+        }
 
         public string SubscriptionTableName { get; set; }
 

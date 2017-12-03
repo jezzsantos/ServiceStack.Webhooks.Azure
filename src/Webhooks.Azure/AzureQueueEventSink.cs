@@ -9,13 +9,15 @@ namespace ServiceStack.Webhooks.Azure
         public const string DefaultQueueName = "webhookevents";
         public const string AzureConnectionStringSettingName = "AzureQueueEventSink.ConnectionString";
         public const string QueueNameSettingName = "AzureQueueEventSink.Queue.Name";
+        private readonly IAppSettings settings;
+        private string connectionString;
         private IAzureQueueStorage<WebhookEvent> queueStorage;
 
         public AzureQueueEventSink()
         {
             QueueName = DefaultQueueName;
 
-            ConnectionString = AzureStorage.AzureEmulatorConnectionString;
+            connectionString = AzureStorage.AzureEmulatorConnectionString;
         }
 
         public AzureQueueEventSink(IAppSettings settings)
@@ -23,7 +25,9 @@ namespace ServiceStack.Webhooks.Azure
         {
             Guard.AgainstNull(() => settings, settings);
 
-            ConnectionString = settings.Get(AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString);
+            this.settings = settings;
+
+            connectionString = settings.Get(AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString);
             QueueName = settings.Get(QueueNameSettingName, DefaultQueueName);
         }
 
@@ -36,7 +40,17 @@ namespace ServiceStack.Webhooks.Azure
             set { queueStorage = value; }
         }
 
-        public string ConnectionString { get; set; }
+        public virtual string ConnectionString
+        {
+            get
+            {
+                if (settings != null)
+                {
+                    connectionString = settings.Get(AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString);
+                }
+                return connectionString;
+            }
+        }
 
         public string QueueName { get; set; }
 
