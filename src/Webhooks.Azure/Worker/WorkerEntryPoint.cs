@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 
 namespace ServiceStack.Webhooks.Azure.Worker
@@ -15,7 +16,14 @@ namespace ServiceStack.Webhooks.Azure.Worker
 
         public override void Run(CancellationToken cancellationToken)
         {
-            Processor.Run(cancellationToken);
+            try
+            {
+                Processor.Run(cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // Ignore the exception to allow worker to shutdown gracefully
+            }
         }
     }
 }

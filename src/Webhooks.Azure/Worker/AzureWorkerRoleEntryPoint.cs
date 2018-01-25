@@ -52,7 +52,13 @@ namespace ServiceStack.Webhooks.Azure.Worker
             try
             {
                 // Run and wait synchronously
-                RunAsync(cancellationTokenSource.Token).Wait();
+                RunAsync(cancellationTokenSource.Token)
+                    .Wait(cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                logger.Info("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerRoleEntryPoint] {0}.Interupted".Fmt(workerName));
+                // Ignore the exception to allow worker to shutdown gracefully
             }
             finally
             {
