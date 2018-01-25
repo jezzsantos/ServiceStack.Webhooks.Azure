@@ -29,7 +29,7 @@ namespace ServiceStack.Webhooks.Azure.Worker
                 var nextMessages = TargetQueue.RemoveMessages(100);
                 if (nextMessages != null && nextMessages.Any())
                 {
-                    logger.Info(@"Processing {0} messages from queue {1}".Fmt(nextMessages.Count, TargetQueue.QueueName));
+                    logger.Info(@"[ServiceStack.Webhooks.Azure.Worker.BaseQueueProcessor] Processing {0} messages from queue {1}".Fmt(nextMessages.Count, TargetQueue.QueueName));
 
                     nextMessages.ForEach(msg =>
                     {
@@ -47,12 +47,12 @@ namespace ServiceStack.Webhooks.Azure.Worker
         {
             try
             {
-                logger.Info(@"Message {0} removed from queue".Fmt(msg.Id));
+                logger.Info(@"[ServiceStack.Webhooks.Azure.Worker.BaseQueueProcessor] Message {0} removed from queue".Fmt(msg.Id));
                 return ProcessMessage(msg);
             }
             catch (Exception)
             {
-                logger.Info(@"Message {0} failed processing".Fmt(msg.Id));
+                logger.Info(@"[ServiceStack.Webhooks.Azure.Worker.BaseQueueProcessor] Message {0} failed processing".Fmt(msg.Id));
                 return false;
             }
         }
@@ -61,12 +61,12 @@ namespace ServiceStack.Webhooks.Azure.Worker
         {
             try
             {
-                logger.Info(@"Message {0} placed on unhandled queue".Fmt(msg.Id));
+                logger.Info(@"[ServiceStack.Webhooks.Azure.Worker.BaseQueueProcessor] Message {0} placed on unhandled queue".Fmt(msg.Id));
                 UnhandledQueue.Enqueue(CreateUnhandledMessage(msg));
             }
             catch (Exception)
             {
-                logger.Error(@"Message {0} failed placement on unhandled queue".Fmt(msg.Id));
+                logger.Error(@"[ServiceStack.Webhooks.Azure.Worker.BaseQueueProcessor] Message {0} failed placement on unhandled queue".Fmt(msg.Id));
             }
         }
 

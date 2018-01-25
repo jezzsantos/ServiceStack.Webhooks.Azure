@@ -18,7 +18,7 @@ namespace ServiceStack.Webhooks.Azure.Worker
             while (!cancellation.IsCancellationRequested)
             {
                 var processorName = GetType().FullName;
-                logger.Info(@"Running Processor: '{0}'".Fmt(processorName));
+                logger.Info(@"[ServiceStack.Webhooks.Azure.Worker.BasicContinuousProcessor] Running Processor: '{0}'".Fmt(processorName));
                 GetAction(cancellation)();
 
                 Task.Delay(GetInterval(), cancellation).Wait(cancellation);
