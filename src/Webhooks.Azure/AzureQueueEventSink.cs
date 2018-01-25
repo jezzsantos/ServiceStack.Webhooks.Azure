@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using ServiceStack.Configuration;
+using ServiceStack.Logging;
 using ServiceStack.Webhooks.Azure.Queue;
+using ServiceStack.Webhooks.Azure.Worker;
 
 namespace ServiceStack.Webhooks.Azure
 {
@@ -12,7 +14,8 @@ namespace ServiceStack.Webhooks.Azure
         private readonly IAppSettings settings;
         private string connectionString;
         private IAzureQueueStorage<WebhookEvent> queueStorage;
-
+        private readonly ILog logger = LogManager.GetLogger(typeof(AzureQueueEventSink));
+        
         public AzureQueueEventSink()
         {
             QueueName = DefaultQueueName;
@@ -59,6 +62,8 @@ namespace ServiceStack.Webhooks.Azure
             Guard.AgainstNull(() => webhookEvent, webhookEvent);
 
             webhookEvent.Data = webhookEvent.Data.ToSafeJson();
+
+            logger.InfoFormat("[ServiceStack.Webhooks.Azure.AzureQueueEventSink] Sinking webhook event {0}, to queue '{1}' queue", webhookEvent.ToJson(), QueueName);
             QueueStorage.Enqueue(webhookEvent);
         }
 

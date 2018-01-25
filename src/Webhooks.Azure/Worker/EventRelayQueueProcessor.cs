@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ServiceStack.Configuration;
+using ServiceStack.Logging;
 using ServiceStack.Webhooks.Azure.Queue;
 using ServiceStack.Webhooks.Clients;
 using ServiceStack.Webhooks.Relays;
@@ -27,6 +28,7 @@ namespace ServiceStack.Webhooks.Azure.Worker
         public const string SeviceClientRetriesSettingName = "EventRelayQueueProcessor.ServiceClient.Retries";
         public const string DefaultSeviceClientTimeoutSettingName = "EventRelayQueueProcessor.ServiceClient.Timeout.Seconds";
         public const string DefaultSubscriptionCacheTimeoutSettingsName = "EventRelayQueueProcessor.SubscriptionCache.Timeout.Seconds";
+        private readonly ILog logger = LogManager.GetLogger(typeof(EventRelayQueueProcessor));
 
         private int pollingInterval;
         private IAzureQueueStorage<WebhookEvent> targetQueue;
@@ -94,6 +96,8 @@ namespace ServiceStack.Webhooks.Azure.Worker
 
         public override bool ProcessMessage(WebhookEvent webhookEvent)
         {
+            logger.InfoFormat("[ServiceStack.Webhooks.Azure.Worker.EventRelayQueueProcessor] Processing webhook event {0}", webhookEvent.ToJson());
+
             var subscriptions = SubscriptionCache.GetAll(webhookEvent.EventName);
             var results = new List<SubscriptionDeliveryResult>();
             subscriptions.ForEach(sub =>
