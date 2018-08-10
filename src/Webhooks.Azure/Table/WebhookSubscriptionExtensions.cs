@@ -14,8 +14,10 @@ namespace ServiceStack.Webhooks.Azure.Table
             var sub = subscription.ConvertTo<WebhookSubscriptionEntity>();
             sub.PartitionKey = string.Empty;
             sub.RowKey = sub.Id;
+            sub.Event = subscription.Event ?? string.Empty;
             sub.IsActive = subscription.IsActive.ToString().ToLowerInvariant();
             sub.Config = subscription.Config.ToJson();
+            sub.CreatedById = subscription.CreatedById ?? string.Empty;
             sub.CreatedDateUtc = subscription.CreatedDateUtc.ToSafeAzureDateTime();
             sub.LastModifiedDateUtc = subscription.LastModifiedDateUtc.ToSafeAzureDateTime();
             return sub;

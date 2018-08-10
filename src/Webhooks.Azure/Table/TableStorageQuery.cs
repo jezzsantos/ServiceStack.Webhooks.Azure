@@ -84,7 +84,7 @@ namespace ServiceStack.Webhooks.Azure.Table
                     new DateTimeOffset(givenDate));
             }
 
-            var givenString = Value != null ? Value.ToString() : null;
+            var givenString = Value?.ToString();
             return TableQuery.GenerateFilterCondition(PropertyName, Operation.ToString().ToLowerInvariant(), givenString);
         }
     }
