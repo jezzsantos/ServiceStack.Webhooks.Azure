@@ -3,7 +3,7 @@
 # ServiceStack.Webhooks.Azure
 Add Webhooks to your Azure ServiceStack services
 
-# [Release Notes](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/wiki/Release-Notes)
+[![Release Notes](https://img.shields.io/nuget/v/ServiceStack.Webhooks.Azure.svg?label=Release%20Notes&colorB=green)](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/wiki/Release-Notes)
 
 # Overview
 
