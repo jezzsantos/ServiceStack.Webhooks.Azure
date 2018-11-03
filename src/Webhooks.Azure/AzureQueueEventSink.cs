@@ -37,7 +37,7 @@ namespace ServiceStack.Webhooks.Azure
         /// <summary>
         ///     For testing only
         /// </summary>
-        internal IAzureQueueStorage<WebhookEvent> QueueStorage
+        public IAzureQueueStorage<WebhookEvent> QueueStorage
         {
             get { return queueStorage ?? (queueStorage = new AzureQueueStorage<WebhookEvent>(ConnectionString, QueueName)); }
             set { queueStorage = value; }

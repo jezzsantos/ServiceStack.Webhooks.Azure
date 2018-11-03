@@ -5,7 +5,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace ServiceStack.Webhooks.Azure.Table
 {
-    internal class TableStorageQuery
+    public class TableStorageQuery
     {
         public TableStorageQuery(string propertyName, QueryOperator operation, object value)
         {
@@ -53,7 +53,7 @@ namespace ServiceStack.Webhooks.Azure.Table
         }
     }
 
-    internal class QueryPart
+    public class QueryPart
     {
         public QueryPart(string propertyName, QueryOperator operation, object value)
         {

@@ -14,7 +14,7 @@ namespace ServiceStack.Webhooks.Azure.Settings
         {
         }
 
-        internal CloudAppSettings(CloudConfigurationSettings cloudSettings)
+        public CloudAppSettings(CloudConfigurationSettings cloudSettings)
         {
             Guard.AgainstNull(() => cloudSettings, cloudSettings);
 

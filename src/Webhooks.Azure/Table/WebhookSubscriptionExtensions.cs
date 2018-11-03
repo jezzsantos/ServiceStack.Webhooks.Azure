@@ -2,7 +2,7 @@ using ServiceStack.Webhooks.ServiceModel.Types;
 
 namespace ServiceStack.Webhooks.Azure.Table
 {
-    internal static class WebhookSubscriptionExtensions
+    public static class WebhookSubscriptionExtensions
     {
         /// <summary>
         ///     Converts the specified subscription DTO to a <see cref="WebhookSubscriptionEntity" /> entity

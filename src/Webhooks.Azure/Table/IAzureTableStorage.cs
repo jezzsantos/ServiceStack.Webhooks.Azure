@@ -3,7 +3,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace ServiceStack.Webhooks.Azure.Table
 {
-    internal interface IAzureTableStorage<TEntity> where TEntity : TableEntity
+    public interface IAzureTableStorage<TEntity> where TEntity : TableEntity
     {
         /// <summary>
         ///     Adds the specified entity to storage
