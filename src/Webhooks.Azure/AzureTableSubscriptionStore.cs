@@ -40,7 +40,7 @@ namespace ServiceStack.Webhooks.Azure
         /// <summary>
         ///     For testing only
         /// </summary>
-        internal IAzureTableStorage<WebhookSubscriptionEntity> SubscriptionStorage
+        public IAzureTableStorage<WebhookSubscriptionEntity> SubscriptionStorage
         {
             get { return subscriptionTableStorage ?? (subscriptionTableStorage = new AzureTableStorage<WebhookSubscriptionEntity>(ConnectionString, SubscriptionTableName)); }
             set { subscriptionTableStorage = value; }
@@ -49,7 +49,7 @@ namespace ServiceStack.Webhooks.Azure
         /// <summary>
         ///     For testing only
         /// </summary>
-        internal IAzureTableStorage<SubscriptionDeliveryResultEntity> DeliveryResultsStorage
+        public IAzureTableStorage<SubscriptionDeliveryResultEntity> DeliveryResultsStorage
         {
             get { return deliveryResultsTableStorage ?? (deliveryResultsTableStorage = new AzureTableStorage<SubscriptionDeliveryResultEntity>(ConnectionString, DeliveryResultsTableName)); }
             set { deliveryResultsTableStorage = value; }

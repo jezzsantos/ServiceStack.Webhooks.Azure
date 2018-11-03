@@ -6,7 +6,7 @@ using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace ServiceStack.Webhooks.Azure.Queue
 {
-    internal class AzureQueueStorage<TEntity> : IAzureQueueStorage<TEntity>
+    public class AzureQueueStorage<TEntity> : IAzureQueueStorage<TEntity>
     {
         private const int CreationTimeoutSecs = 60;
         private const int MaxPeekableMessages = 32;

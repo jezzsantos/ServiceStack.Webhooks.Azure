@@ -3,7 +3,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace ServiceStack.Webhooks.Azure.Table
 {
-    internal class SubscriptionDeliveryResultEntity : TableEntity
+    public class SubscriptionDeliveryResultEntity : TableEntity
     {
         public string Id { get; set; }
 

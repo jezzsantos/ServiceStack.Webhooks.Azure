@@ -68,7 +68,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
                 Assert.That(consumed.Count, Is.EqualTo(0));
             }
 
-            [Test, Category("Integration")]
+            [Test, Category("Integration.NOCI")]
             public void WhenEventQueued_ThenSubscriberNotified()
             {
                 SetupEvent("aneventname");
@@ -129,11 +129,11 @@ namespace ServiceStack.Webhooks.Azure.IntTests
             private static void AssertSunkEvent(ConsumedEvent consumedEvent)
             {
                 Assert.That(consumedEvent.EventName, Is.EqualTo("aneventname"));
-                Assert.That(consumedEvent.Data.A, Is.EqualTo("1"));
-                Assert.That(consumedEvent.Data.B, Is.EqualTo("2"));
-                Assert.That(consumedEvent.Data.C.D, Is.EqualTo("3"));
-                Assert.That(consumedEvent.Data.C.E, Is.EqualTo("4"));
-                Assert.That(consumedEvent.Data.C.F, Is.EqualTo("5"));
+                Assert.That(consumedEvent.Data.A, Is.EqualTo(1));
+                Assert.That(consumedEvent.Data.B, Is.EqualTo(2));
+                Assert.That(consumedEvent.Data.C.D, Is.EqualTo(3));
+                Assert.That(consumedEvent.Data.C.E, Is.EqualTo(4));
+                Assert.That(consumedEvent.Data.C.F, Is.EqualTo(5));
             }
 
             private static void WaitFor(int seconds)

@@ -2,7 +2,7 @@
 
 namespace ServiceStack.Webhooks.Azure.Settings
 {
-    internal interface ICloudConfigurationProvider
+    public interface ICloudConfigurationProvider
     {
         /// <summary>
         ///     Gets the duration of the cache

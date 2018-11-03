@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Threading.Tasks;
+using NUnit.Framework;
 using ServiceStack.Webhooks.Azure.IntTests.Services;
 
 namespace ServiceStack.Webhooks.Azure.IntTests
@@ -39,7 +41,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
                 ((AzureQueueEventSink) eventSink).Clear();
             }
 
-            [Test, Category("Integration")]
+            [Test, Category("Integration.NOCI")]
             public void WhenRaiseEvent_ThenEventSunk()
             {
                 client.Put(new RaiseEvent

@@ -16,7 +16,7 @@ namespace ServiceStack.Webhooks.Azure.Settings
         {
         }
 
-        internal CloudConfigurationSettings(ICloudConfigurationProvider provider)
+        public CloudConfigurationSettings(ICloudConfigurationProvider provider)
         {
             Guard.AgainstNull(() => provider, provider);
 
@@ -25,7 +25,7 @@ namespace ServiceStack.Webhooks.Azure.Settings
             ClearCache();
         }
 
-        internal IDictionary<string, string> CachedSettings { get; }
+        public IDictionary<string, string> CachedSettings { get; }
 
         /// <summary>
         ///     Returns the setting with the specified name
@@ -49,7 +49,7 @@ namespace ServiceStack.Webhooks.Azure.Settings
             return CachedSettings[settingName];
         }
 
-        internal void ClearCache()
+        public void ClearCache()
         {
             CachedSettings.Clear();
             cacheRefreshedNext = DateTime.UtcNow + TimeSpan.FromSeconds(configurationProvider.CacheDuration);
