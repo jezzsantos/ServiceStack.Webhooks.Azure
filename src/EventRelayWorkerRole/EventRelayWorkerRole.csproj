@@ -15,6 +15,7 @@
     <RoleType>Worker</RoleType>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <Import Project="..\BuildConfiguration.targets" />
   <ItemGroup>
@@ -105,7 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.EventRelayWorkerRole.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Webhooks.Azure\Webhooks.Azure.csproj">
