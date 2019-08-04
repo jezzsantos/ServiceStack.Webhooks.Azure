@@ -75,16 +75,16 @@
       <HintPath>..\packages\ServiceStack.Text.5.5.0\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Webhooks, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.2.0.0\lib\net462\ServiceStack.Webhooks.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.2.1.0\lib\net462\ServiceStack.Webhooks.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Webhooks.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.2.0.0\lib\net462\ServiceStack.Webhooks.Common.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.2.1.0\lib\net462\ServiceStack.Webhooks.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Webhooks.Interfaces, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.Interfaces.2.0.0\lib\net462\ServiceStack.Webhooks.Interfaces.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.Interfaces.2.1.0\lib\net462\ServiceStack.Webhooks.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Webhooks.Relays, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9256dde12281a309, processorArchitecture=MSIL">
-      <HintPath>..\packages\ServiceStack.Webhooks.2.0.0\lib\net462\ServiceStack.Webhooks.Relays.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Webhooks.2.1.0\lib\net462\ServiceStack.Webhooks.Relays.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
