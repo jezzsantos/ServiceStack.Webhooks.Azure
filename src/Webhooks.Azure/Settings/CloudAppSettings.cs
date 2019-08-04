@@ -56,6 +56,11 @@ namespace ServiceStack.Webhooks.Azure.Settings
             return new Dictionary<string, string>();
         }
 
+        public List<KeyValuePair<string, string>> GetKeyValuePairs(string key)
+        {
+            return new List<KeyValuePair<string, string>>();
+        }
+
         public T Get<T>(string name)
         {
             return Get(name, default(T));
