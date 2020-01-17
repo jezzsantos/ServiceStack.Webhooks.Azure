@@ -17,7 +17,8 @@ namespace ServiceStack.Webhooks.Azure.IntTests
                 sink.Clear();
             }
 
-            [Test, Category("Integration")]
+            /// Fails in AppVeyor, until they install Azure Storage Emulator 5.10 in Visual Studio 2017 image
+            [Test, Category("Integration.NOCI")]
             public void WhenCreate_ThenQueuesEvent()
             {
                 var id = DataFormats.CreateEntityIdentifier();
