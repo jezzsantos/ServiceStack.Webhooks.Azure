@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhooks.Azure", "Webhooks.Azure\Webhooks.Azure.csproj", "{D32BA10F-0BC5-439D-AFE6-F6AFA0EC99CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webhooks.Azure", "Webhooks.Azure\Webhooks.Azure.csproj", "{D32BA10F-0BC5-439D-AFE6-F6AFA0EC99CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9A706EE6-B1B4-4E8E-965F-AB23DF61F1A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhooks.Azure.UnitTests", "Webhooks.Azure.UnitTests\Webhooks.Azure.UnitTests.csproj", "{05572C6D-2723-456F-8C7E-F4B6FA8467E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webhooks.Azure.UnitTests", "Webhooks.Azure.UnitTests\Webhooks.Azure.UnitTests.csproj", "{05572C6D-2723-456F-8C7E-F4B6FA8467E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhooks.Azure.IntTests", "Webhooks.Azure.IntTests\Webhooks.Azure.IntTests.csproj", "{3D158CE6-1370-4957-A78B-D3EFB730D411}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webhooks.Azure.IntTests", "Webhooks.Azure.IntTests\Webhooks.Azure.IntTests.csproj", "{3D158CE6-1370-4957-A78B-D3EFB730D411}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E976BCF9-0B83-4A8F-9481-4501A1CF1933} = {E976BCF9-0B83-4A8F-9481-4501A1CF1933}
 	EndProjectSection
@@ -17,12 +17,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2F17059F-751F-4823-ABE0-3E1A8FAF1279}"
 	ProjectSection(SolutionItems) = preProject
 		BuildConfiguration.targets = BuildConfiguration.targets
+		Directory.Build.props = Directory.Build.props
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6A5E5416-1E83-4664-9794-AB66F37A1B24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting.Common", "UnitTesting.Common\UnitTesting.Common.csproj", "{6468D272-EBA8-46BB-8D57-19E9EC3AB100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTesting.Common", "UnitTesting.Common\UnitTesting.Common.csproj", "{6468D272-EBA8-46BB-8D57-19E9EC3AB100}"
 EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Cloud", "Cloud\Cloud.ccproj", "{E976BCF9-0B83-4A8F-9481-4501A1CF1933}"
 EndProject

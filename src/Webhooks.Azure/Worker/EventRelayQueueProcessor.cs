@@ -59,8 +59,8 @@ namespace ServiceStack.Webhooks.Azure.Worker
         /// </summary>
         public override IAzureQueueStorage<WebhookEvent> TargetQueue
         {
-            get { return targetQueue ?? (targetQueue = new AzureQueueStorage<WebhookEvent>(ConnectionString, TargetQueueName)); }
-            set { targetQueue = value; }
+            get => targetQueue ?? (targetQueue = new AzureQueueStorage<WebhookEvent>(ConnectionString, TargetQueueName));
+            set => targetQueue = value;
         }
 
         /// <summary>
@@ -68,8 +68,8 @@ namespace ServiceStack.Webhooks.Azure.Worker
         /// </summary>
         public override IAzureQueueStorage<IUnhandledMessage> UnhandledQueue
         {
-            get { return unhandledQueue ?? (unhandledQueue = new AzureQueueStorage<IUnhandledMessage>(ConnectionString, UnhandledQueueName)); }
-            set { unhandledQueue = value; }
+            get => unhandledQueue ?? (unhandledQueue = new AzureQueueStorage<IUnhandledMessage>(ConnectionString, UnhandledQueueName));
+            set => unhandledQueue = value;
         }
 
         public IEventSubscriptionCache SubscriptionCache { get; set; }
@@ -80,8 +80,8 @@ namespace ServiceStack.Webhooks.Azure.Worker
 
         public override int IntervalSeconds
         {
-            get { return pollingInterval; }
-            set { pollingInterval = value; }
+            get => pollingInterval;
+            set => pollingInterval = value;
         }
 
         public string ConnectionString { get; set; }

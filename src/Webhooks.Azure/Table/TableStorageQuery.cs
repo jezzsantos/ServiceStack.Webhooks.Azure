@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.Azure.Cosmos.Table;
 
 namespace ServiceStack.Webhooks.Azure.Table
 {
@@ -24,10 +24,7 @@ namespace ServiceStack.Webhooks.Azure.Table
 
         public List<QueryPart> Parts { get; }
 
-        public string Query
-        {
-            get { return ToQuery(Parts); }
-        }
+        public string Query => ToQuery(Parts);
 
         private static string ToQuery(List<QueryPart> parts)
         {

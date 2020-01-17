@@ -2,7 +2,6 @@
 using ServiceStack.Configuration;
 using ServiceStack.Logging;
 using ServiceStack.Webhooks.Azure.Queue;
-using ServiceStack.Webhooks.Azure.Worker;
 
 namespace ServiceStack.Webhooks.Azure
 {
@@ -11,11 +10,11 @@ namespace ServiceStack.Webhooks.Azure
         public const string DefaultQueueName = "webhookevents";
         public const string AzureConnectionStringSettingName = "AzureQueueEventSink.ConnectionString";
         public const string QueueNameSettingName = "AzureQueueEventSink.Queue.Name";
+        private readonly ILog logger = LogManager.GetLogger(typeof(AzureQueueEventSink));
         private readonly IAppSettings settings;
         private string connectionString;
         private IAzureQueueStorage<WebhookEvent> queueStorage;
-        private readonly ILog logger = LogManager.GetLogger(typeof(AzureQueueEventSink));
-        
+
         public AzureQueueEventSink()
         {
             QueueName = DefaultQueueName;
@@ -39,8 +38,8 @@ namespace ServiceStack.Webhooks.Azure
         /// </summary>
         public IAzureQueueStorage<WebhookEvent> QueueStorage
         {
-            get { return queueStorage ?? (queueStorage = new AzureQueueStorage<WebhookEvent>(ConnectionString, QueueName)); }
-            set { queueStorage = value; }
+            get => queueStorage ?? (queueStorage = new AzureQueueStorage<WebhookEvent>(ConnectionString, QueueName));
+            set => queueStorage = value;
         }
 
         public virtual string ConnectionString
@@ -51,6 +50,7 @@ namespace ServiceStack.Webhooks.Azure
                 {
                     connectionString = settings.Get(AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString);
                 }
+
                 return connectionString;
             }
         }

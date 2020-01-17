@@ -42,8 +42,8 @@ namespace ServiceStack.Webhooks.Azure
         /// </summary>
         public IAzureTableStorage<WebhookSubscriptionEntity> SubscriptionStorage
         {
-            get { return subscriptionTableStorage ?? (subscriptionTableStorage = new AzureTableStorage<WebhookSubscriptionEntity>(ConnectionString, SubscriptionTableName)); }
-            set { subscriptionTableStorage = value; }
+            get => subscriptionTableStorage ?? (subscriptionTableStorage = new AzureTableStorage<WebhookSubscriptionEntity>(ConnectionString, SubscriptionTableName));
+            set => subscriptionTableStorage = value;
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace ServiceStack.Webhooks.Azure
         /// </summary>
         public IAzureTableStorage<SubscriptionDeliveryResultEntity> DeliveryResultsStorage
         {
-            get { return deliveryResultsTableStorage ?? (deliveryResultsTableStorage = new AzureTableStorage<SubscriptionDeliveryResultEntity>(ConnectionString, DeliveryResultsTableName)); }
-            set { deliveryResultsTableStorage = value; }
+            get => deliveryResultsTableStorage ?? (deliveryResultsTableStorage = new AzureTableStorage<SubscriptionDeliveryResultEntity>(ConnectionString, DeliveryResultsTableName));
+            set => deliveryResultsTableStorage = value;
         }
 
         public virtual string ConnectionString
@@ -63,6 +63,7 @@ namespace ServiceStack.Webhooks.Azure
                 {
                     connectionString = settings.Get(AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString);
                 }
+
                 return connectionString;
             }
         }

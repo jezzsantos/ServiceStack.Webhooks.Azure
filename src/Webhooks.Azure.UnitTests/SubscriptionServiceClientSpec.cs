@@ -36,7 +36,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
             {
                 Assert.Throws<ArgumentNullException>(() =>
                     // ReSharper disable once ObjectCreationAsStatement
-                        new SubscriptionServiceClient(null));
+                    new SubscriptionServiceClient(null));
             }
 
             [Test, Category("Unit")]

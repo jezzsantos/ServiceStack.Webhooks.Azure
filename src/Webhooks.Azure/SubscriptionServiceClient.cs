@@ -42,6 +42,7 @@ namespace ServiceStack.Webhooks.Azure
             {
                 serviceClient.OnAuthenticationRequired = () => OnAuthenticationRequired(serviceClient);
             }
+
             return serviceClient.Get(new SearchSubscriptions
             {
                 EventName = eventName
@@ -55,6 +56,7 @@ namespace ServiceStack.Webhooks.Azure
             {
                 serviceClient.OnAuthenticationRequired = () => OnAuthenticationRequired(serviceClient);
             }
+
             serviceClient.Put(new UpdateSubscriptionHistory
             {
                 Results = results

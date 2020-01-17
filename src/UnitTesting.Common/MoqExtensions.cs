@@ -42,6 +42,7 @@ namespace ServiceStack.Webhooks.UnitTesting
                 {
                     throw result as Exception;
                 }
+
                 return (TResult) result;
             });
         }

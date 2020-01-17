@@ -114,17 +114,11 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Worker
             WorkersInternal = new List<WorkerEntryPoint>();
         }
 
-        public bool IsStoppedInternal
-        {
-            get { return Stopped; }
-        }
+        public bool IsStoppedInternal => Stopped;
 
         public List<WorkerEntryPoint> WorkersInternal { get; }
 
-        protected override IEnumerable<WorkerEntryPoint> Workers
-        {
-            get { return WorkersInternal; }
-        }
+        protected override IEnumerable<WorkerEntryPoint> Workers => WorkersInternal;
     }
 
     public class UnresponsiveTestWorker : WorkerEntryPoint

@@ -153,6 +153,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Worker
             {
                 throw new Exception("Forced thrown exception");
             }
+
             MessageProcessed = true;
             return ProcessMessageResult;
         }

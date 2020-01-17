@@ -16,6 +16,11 @@
     <SkipCreateNugetPackage>true</SkipCreateNugetPackage>
   </PropertyGroup>
   <Import Project="..\BuildConfiguration.targets" />
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
   <!-- Items for the project -->
   <ItemGroup>
     <ServiceDefinition Include="ServiceDefinition.csdef" />

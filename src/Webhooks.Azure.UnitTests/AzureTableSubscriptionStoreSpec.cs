@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.Azure.Cosmos.Table;
 using Moq;
 using NUnit.Framework;
 using ServiceStack.Configuration;
@@ -30,7 +30,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 store = new AzureTableSubscriptionStore
                 {
                     SubscriptionStorage = subscriptionStorage.Object,
-                    DeliveryResultsStorage = deliveryResultStorage.Object,
+                    DeliveryResultsStorage = deliveryResultStorage.Object
                 };
             }
 
@@ -65,7 +65,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
             [Test, Category("Unit")]
             public void WhenConnectionStringWithNoSettings_ThenReturnsDefault()
             {
-                this.store = new AzureTableSubscriptionStore();
+                store = new AzureTableSubscriptionStore();
 
                 var result = store.ConnectionString;
 
@@ -78,7 +78,7 @@ namespace ServiceStack.Webhooks.Azure.UnitTests
                 var settings = new Mock<IAppSettings>();
                 settings.Setup(s => s.Get(AzureTableSubscriptionStore.AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString))
                     .Returns("aconnectionstring");
-                this.store = new AzureTableSubscriptionStore(settings.Object);
+                store = new AzureTableSubscriptionStore(settings.Object);
 
                 var result = store.ConnectionString;
 
