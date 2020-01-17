@@ -176,3 +176,13 @@ Go to the 'Settings' tab and add the following settings:
 * (string) **EventRelayQueueProcessor.ServiceClient.Timeout.Seconds** - The timeout (in seconds) the relay will wait for the subscriber endpoint before cancelling the notification. Default: 60
 
 Note: the value of the setting `EventRelayQueueProcessor.TargetQueue.Name` must be the same as the `AzureQueueEventSink.QueueName` that you may have configured in the `WebhookFeature`.
+
+
+
+# Development Notes
+
+In the current version (v.3.0.0), depending on where you clone the git repo, you may or may not be able to build and run the Integration tests. 
+
+This is due to file path limitations in Windows, and related to copying built Cloud project resources on the disk.
+
+Recommended workaround is to clone the repo to a folder as close to `C:\` drive as possible, such as `C:\projects\ServiceStack.Webhooks.Azure`.
