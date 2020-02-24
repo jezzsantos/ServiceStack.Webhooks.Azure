@@ -16,13 +16,6 @@ namespace ServiceStack.Webhooks.Azure.Worker
         {
             Guard.AgainstNull(() => container, container);
 
-            RegisterDependencies(container);
-
-            Processor = container.Resolve<EventRelayQueueProcessor>();
-        }
-
-        private static void RegisterDependencies(Container container)
-        {
             var appSettings = container.Resolve<IAppSettings>();
 
             if (!container.Exists<ICacheClient>())
@@ -50,6 +43,8 @@ namespace ServiceStack.Webhooks.Azure.Worker
                 SubscriptionCache = x.Resolve<IEventSubscriptionCache>(),
                 SubscriptionService = x.Resolve<ISubscriptionService>()
             });
+
+            Processor = container.Resolve<EventRelayQueueProcessor>();
         }
     }
 }

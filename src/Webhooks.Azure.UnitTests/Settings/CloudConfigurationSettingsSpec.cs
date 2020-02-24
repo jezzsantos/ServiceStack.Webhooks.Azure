@@ -11,12 +11,12 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Settings
         public class GivenAContext
         {
             private CloudConfigurationSettings configuration;
-            private Mock<ICloudConfigurationProvider> configurationProvider;
+            private Mock<IConfigurationProvider> configurationProvider;
 
             [SetUp]
             public void Initialize()
             {
-                configurationProvider = new Mock<ICloudConfigurationProvider>();
+                configurationProvider = new Mock<IConfigurationProvider>();
                 configurationProvider.Setup(cp => cp.GetSetting(It.IsAny<string>()))
                     .Returns("avalue");
                 configurationProvider.Setup(cp => cp.CacheDuration)

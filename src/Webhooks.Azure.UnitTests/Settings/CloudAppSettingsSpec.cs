@@ -10,13 +10,13 @@ namespace ServiceStack.Webhooks.Azure.UnitTests.Settings
         [TestFixture]
         public class GivenAContext
         {
-            private Mock<ICloudConfigurationProvider> provider;
+            private Mock<IConfigurationProvider> provider;
             private CloudAppSettings settings;
 
             [SetUp]
             public void Initialize()
             {
-                provider = new Mock<ICloudConfigurationProvider>();
+                provider = new Mock<IConfigurationProvider>();
                 provider.Setup(prov => prov.GetSetting("akey"))
                     .Returns("avalue");
 

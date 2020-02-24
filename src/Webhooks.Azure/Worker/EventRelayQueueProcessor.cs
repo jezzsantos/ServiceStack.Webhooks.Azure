@@ -24,9 +24,9 @@ namespace ServiceStack.Webhooks.Azure.Worker
         public const string PollingIntervalSettingName = "EventRelayQueueProcessor.Polling.Interval.Seconds";
         public const string AzureConnectionStringSettingName = "EventRelayQueueProcessor.ConnectionString";
         public const string TargetQueueNameSettingName = "EventRelayQueueProcessor.TargetQueue.Name";
-        public const string UnhandledQueneNameStringSettingName = "EventRelayQueueProcessor.UnhandledQueue.Name";
-        public const string SeviceClientRetriesSettingName = "EventRelayQueueProcessor.ServiceClient.Retries";
-        public const string DefaultSeviceClientTimeoutSettingName = "EventRelayQueueProcessor.ServiceClient.Timeout.Seconds";
+        public const string UnhandledQueueNameStringSettingName = "EventRelayQueueProcessor.UnhandledQueue.Name";
+        public const string ServiceClientRetriesSettingName = "EventRelayQueueProcessor.ServiceClient.Retries";
+        public const string DefaultServiceClientTimeoutSettingName = "EventRelayQueueProcessor.ServiceClient.Timeout.Seconds";
         public const string DefaultSubscriptionCacheTimeoutSettingsName = "EventRelayQueueProcessor.SubscriptionCache.Timeout.Seconds";
         private readonly ILog logger = LogManager.GetLogger(typeof(EventRelayQueueProcessor));
 
@@ -37,7 +37,7 @@ namespace ServiceStack.Webhooks.Azure.Worker
         public EventRelayQueueProcessor()
         {
             ServiceClientRetries = DefaultServiceClientRetries;
-            SeviceClientTimeoutSeconds = DefaultServiceClientTimeoutSeconds;
+            ServiceClientTimeoutSeconds = DefaultServiceClientTimeoutSeconds;
             pollingInterval = DefaultPollingIntervalSeconds;
             ConnectionString = AzureStorage.AzureEmulatorConnectionString;
         }
@@ -46,12 +46,12 @@ namespace ServiceStack.Webhooks.Azure.Worker
         {
             Guard.AgainstNull(() => settings, settings);
 
-            ServiceClientRetries = settings.Get(SeviceClientRetriesSettingName, DefaultServiceClientRetries);
-            SeviceClientTimeoutSeconds = settings.Get(DefaultSeviceClientTimeoutSettingName, DefaultServiceClientTimeoutSeconds);
+            ServiceClientRetries = settings.Get(ServiceClientRetriesSettingName, DefaultServiceClientRetries);
+            ServiceClientTimeoutSeconds = settings.Get(DefaultServiceClientTimeoutSettingName, DefaultServiceClientTimeoutSeconds);
             pollingInterval = settings.Get(PollingIntervalSettingName, DefaultPollingIntervalSeconds);
             ConnectionString = settings.Get(AzureConnectionStringSettingName, AzureStorage.AzureEmulatorConnectionString);
             TargetQueueName = settings.Get(TargetQueueNameSettingName, DefaultTargetQueueName);
-            UnhandledQueueName = settings.Get(UnhandledQueneNameStringSettingName, DefaultUnhandledQueueName);
+            UnhandledQueueName = settings.Get(UnhandledQueueNameStringSettingName, DefaultUnhandledQueueName);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace ServiceStack.Webhooks.Azure.Worker
 
         public int ServiceClientRetries { get; set; }
 
-        public int SeviceClientTimeoutSeconds { get; set; }
+        public int ServiceClientTimeoutSeconds { get; set; }
 
         public override bool ProcessMessage(WebhookEvent webhookEvent)
         {
@@ -120,7 +120,7 @@ namespace ServiceStack.Webhooks.Azure.Worker
         private SubscriptionDeliveryResult NotifySubscription(SubscriptionRelayConfig subscription, WebhookEvent webhookEvent)
         {
             ServiceClient.Retries = ServiceClientRetries;
-            ServiceClient.Timeout = TimeSpan.FromSeconds(SeviceClientTimeoutSeconds);
+            ServiceClient.Timeout = TimeSpan.FromSeconds(ServiceClientTimeoutSeconds);
             return ServiceClient.Relay(subscription, webhookEvent);
         }
     }

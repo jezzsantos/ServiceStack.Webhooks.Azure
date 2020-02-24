@@ -1,21 +1,22 @@
-﻿#if NETFRAMEWORK
+﻿#if NETSTANDARD
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Fabric;
 using ServiceStack.Configuration;
 
 namespace ServiceStack.Webhooks.Azure.Settings
 {
-    public class CloudAppSettings : IAppSettings
+    public class FabricAppSettings : IAppSettings
     {
-        private readonly CloudConfigurationSettings settings;
+        private readonly FabricConfigurationSettings settings;
 
-        public CloudAppSettings()
-            : this(new CloudConfigurationSettings())
+        public FabricAppSettings(StatelessServiceContext context)
+            : this(new FabricConfigurationSettings(context))
         {
         }
 
-        public CloudAppSettings(CloudConfigurationSettings settings)
+        public FabricAppSettings(FabricConfigurationSettings settings)
         {
             Guard.AgainstNull(() => settings, settings);
 
@@ -39,7 +40,7 @@ namespace ServiceStack.Webhooks.Azure.Settings
 
         public void Set<T>(string key, T value)
         {
-            throw new NotImplementedException("CloudAppSettings.Set<T> is not implemented");
+            throw new NotImplementedException("FabricAppSettings.Set<T> is not implemented");
         }
 
         public string GetString(string name)

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsServiceFabricServiceProject>True</IsServiceFabricServiceProject>
+    <ServerGarbageCollection>True</ServerGarbageCollection>
+    <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
+    <TargetLatestRuntimePatch>False</TargetLatestRuntimePatch>
+    <RootNamespace>ServiceStack.Webhooks.EventRelayStatelessService</RootNamespace>
+    <AssemblyName>ServiceStack.Webhooks.EventRelayStatelessService</AssemblyName>
+    <Configurations>Debug;Release;ReleaseNoTestDeploy</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="4.0.466" />
+  </ItemGroup>
+ <ItemGroup>
+    <ProjectReference Include="..\Webhooks.Azure\Webhooks.Azure.csproj" />
+  </ItemGroup>
+</Project>

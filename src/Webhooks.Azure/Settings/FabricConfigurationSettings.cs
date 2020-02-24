@@ -1,23 +1,24 @@
-﻿#if NETFRAMEWORK
+﻿#if NETSTANDARD
 using System;
 using System.Collections.Generic;
+using System.Fabric;
 
 namespace ServiceStack.Webhooks.Azure.Settings
 {
     /// <summary>
-    ///     Defines configurations settings stored in an cloud role configuration file.
+    ///     Defines configurations settings stored in netcore configuration files
     /// </summary>
-    public class CloudConfigurationSettings
+    public class FabricConfigurationSettings
     {
         private readonly IConfigurationProvider configurationProvider;
         private DateTime cacheRefreshedNext = DateTime.MinValue;
 
-        public CloudConfigurationSettings()
-            : this(new CloudConfigurationProvider())
+        public FabricConfigurationSettings(StatelessServiceContext context)
+            : this(new FabricConfigurationProvider(context))
         {
         }
 
-        public CloudConfigurationSettings(IConfigurationProvider provider)
+        public FabricConfigurationSettings(IConfigurationProvider provider)
         {
             Guard.AgainstNull(() => provider, provider);
 

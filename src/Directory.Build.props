@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <!-- NuGet package information -->
-  <PropertyGroup Condition="'$(MSBuildProjectName)' != 'Cloud'">
+  <PropertyGroup Condition="'$(MSBuildProjectName)' != 'Cloud' AND '$(MSBuildProjectName)' != 'Fabric' ">
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '..\'">..\</SolutionDir>
     <GlobalInfo>$([System.IO.File]::ReadAllText('$(SolutionDir)GlobalAssemblyInfo.cs'))</GlobalInfo>
     <Info>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)\Properties\AssemblyInfo.cs'))</Info>
     <Pattern>^\s*\[assembly: AssemblyDescription\(\s*"([^"]+)"</Pattern>

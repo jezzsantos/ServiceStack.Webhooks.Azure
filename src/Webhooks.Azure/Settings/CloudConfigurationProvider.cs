@@ -1,21 +1,9 @@
-﻿using Microsoft.Azure;
+﻿#if NETFRAMEWORK
+using Microsoft.Azure;
 
 namespace ServiceStack.Webhooks.Azure.Settings
 {
-    public interface ICloudConfigurationProvider
-    {
-        /// <summary>
-        ///     Gets the duration of the cache
-        /// </summary>
-        int CacheDuration { get; }
-
-        /// <summary>
-        ///     Gets the setting with the specified name
-        /// </summary>
-        string GetSetting(string settingName);
-    }
-
-    internal class CloudConfigurationProvider : ICloudConfigurationProvider
+    internal class CloudConfigurationProvider : IConfigurationProvider
     {
         internal const string CloudConfigurationCacheDurationSettingName =
             @"CloudConfigurationSettings.CacheDuration";
@@ -45,3 +33,4 @@ namespace ServiceStack.Webhooks.Azure.Settings
         }
     }
 }
+#endif

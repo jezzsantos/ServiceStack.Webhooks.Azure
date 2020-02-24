@@ -17,17 +17,17 @@ This project makes it very easy to plugin various Azure components to the [Servi
 
 Want to get involved in this project? or there is something missing and you want to help improve this capability for your services? just send us a message or pull-request!
 
-## Tables, Queues, WorkerRoles
+## Tables, Queues, WorkerRoles, Stateless Services
 
 If you deploy your ServiceStack web service to Microsoft Azure, you may want to use Azure Table Storage, Queues, Buses etc. to allow your app to scale and perform at scale when using webhooks.
 
-For example, 'subscriptions' can be stored in Azure Table Storage, or Azure SQL, 'events' can be queued in Azure Queue Storage,  Function, or Service Bus, and then 'events' can be relayed by a Function, ServiceBus or WorkerRole to subscribers.
+For example, 'subscriptions' can be stored in Azure Table Storage, or Azure SQL, 'events' can be queued in Azure Queue Storage,  Function, or Service Bus, and then 'events' can be relayed by a Function, ServiceBus or WorkerRole or StatelessService to subscribers.
 
 In this project, we currently support the following:
 
 * Storing subscriptions in the [`AzureTableSubscriptionStore`](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/blob/master/src/Webhooks.Azure/AzureTableSubscriptionStore.cs)
 * Sinking events in the [`AzureQueueEventSink`](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/blob/master/src/Webhooks.Azure/AzureQueueEventSink.cs)
-* Relaying events from the [`AzureRelayWorker`](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/blob/master/src/Webhooks.Azure/Worker/EventRelayWorker.cs)
+* Relaying events from the [`AzureRelayWorker`](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/blob/master/src/Webhooks.Azure/Worker/EventRelayWorker.cs) as either a Cloud Service (Classic) WorkerRole or Service Fabric StatelessService.
 
 It looks like this:
 
