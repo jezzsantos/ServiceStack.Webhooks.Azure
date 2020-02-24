@@ -8,18 +8,23 @@ using ServiceStack.Logging;
 
 namespace ServiceStack.Webhooks.Azure.Worker
 {
-    internal static class ServiceLoop
+    internal static class WorkerRunner
     {
-        internal static async Task RunAsync(IList<WorkerEntryPoint> workers, ILog logger, CancellationToken cancellation)
+        internal static async Task RunContinuouslyAsync(ILog logger, IList<WorkerEntryPoint> workers, CancellationToken cancellation)
+        {
+            while (!cancellation.IsCancellationRequested) await RunOnceAsync(logger, workers, cancellation);
+        }
+
+        internal static async Task RunOnceAsync(ILog logger, IList<WorkerEntryPoint> workers, CancellationToken cancellation)
         {
             await Task.CompletedTask;
 
-            var workerName = typeof(ServiceLoop).FullName;
-            logger.Info("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerRoleEntryPoint] {0}.RunAsync Running all workers".Fmt(workerName));
+            var workerName = typeof(WorkerRunner).FullName;
+            logger.Info("[ServiceStack.Webhooks.Azure.Worker.WorkerRunner] {0}.RunOnceAsync Running all workers".Fmt(workerName));
 
             if (workers == null || !workers.Any())
             {
-                logger.Info("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerRoleEntryPoint] {0}.RunAsync No Workers to run".Fmt(workerName));
+                logger.Info("[ServiceStack.Webhooks.Azure.Worker.WorkerRunner] {0}.RunOnceAsync No Workers to run".Fmt(workerName));
             }
             else
             {
@@ -32,7 +37,7 @@ namespace ServiceStack.Webhooks.Azure.Worker
                     var exceptions = new ConcurrentQueue<Exception>();
                     Parallel.ForEach(workers, options, worker =>
                     {
-                        logger.Info("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerRoleEntryPoint] {0}.RunAsync Running worker '{1}'".Fmt(workerName, worker.GetType().FullName));
+                        logger.Info("[ServiceStack.Webhooks.Azure.Worker.WorkerRunner] {0}.RunOnceAsync Running worker '{1}'".Fmt(workerName, worker.GetType().FullName));
 
                         try
                         {
@@ -52,18 +57,18 @@ namespace ServiceStack.Webhooks.Azure.Worker
                         {
                             if (!(taskException is OperationCanceledException))
                             {
-                                logger.Fatal("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerRoleEntryPoint] {0}.RunAsync Worker crashed".Fmt(workerName), taskException);
+                                logger.Fatal("[ServiceStack.Webhooks.Azure.Worker.WorkerRunner] {0}.RunOnceAsync Worker crashed".Fmt(workerName), taskException);
                             }
                         });
                     }
                 }
                 catch (OperationCanceledException)
                 {
-                    logger.Info("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerRoleEntryPoint] {0}.RunAsync Worker ended because of cancellation".Fmt(workerName));
+                    logger.Info("[ServiceStack.Webhooks.Azure.Worker.WorkerRunner] {0}.RunOnceAsync Worker ended because of cancellation".Fmt(workerName));
                 }
                 catch (Exception ex)
                 {
-                    logger.Fatal("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerRoleEntryPoint] {0}.RunAsync Worker crashed".Fmt(workerName), ex);
+                    logger.Fatal("[ServiceStack.Webhooks.Azure.Worker.WorkerRunner] {0}.RunOnceAsync Worker crashed".Fmt(workerName), ex);
                     throw;
                 }
             }

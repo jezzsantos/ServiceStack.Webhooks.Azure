@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Section Name="AppSettings">
-    <Parameter Name="MyParameter" Value="Value1" />
+    <Parameter Name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" Value="UseDevelopmentStorage=true" />
+    <Parameter Name="SubscriptionServiceClient.SubscriptionService.BaseUrl" Value="http://localhost:5567/" />
+    <Parameter Name="EventRelayQueueProcessor.Polling.Interval.Seconds" Value="1" />
+    <Parameter Name="EventRelayQueueProcessor.ConnectionString" Value="UseDevelopmentStorage=true" />
+    <Parameter Name="EventRelayQueueProcessor.TargetQueue.Name" Value="webhookevents" />
+    <Parameter Name="EventRelayQueueProcessor.UnhandledQueue.Name" Value="unhandledwebhookevents" />
+    <Parameter Name="EventRelayQueueProcessor.ServiceClient.Retries" Value="3" />
+    <Parameter Name="EventRelayQueueProcessor.ServiceClient.Timeout.Seconds" Value="60" />
+    <Parameter Name="EventRelayQueueProcessor.SubscriptionCache.Timeout.Seconds" Value="2" />
   </Section>
 
 </Settings>

@@ -6,7 +6,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
     public class WebhookClientSpec
     {
         [TestFixture]
-        public class GivenAzureConfiguredFeature : AzureIntegrationTestBase
+        public class GivenAzureConfiguredFeature : CloudServiceIntegrationTestBase
         {
             private static AppSelfHostBase appHost;
             private static JsonServiceClient client;

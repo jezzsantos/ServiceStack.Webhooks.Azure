@@ -5,7 +5,7 @@ using ServiceStack.Webhooks.ServiceModel.Types;
 namespace ServiceStack.Webhooks.Azure.IntTests
 {
     [TestFixture]
-    public abstract class GivenNoUserWithSubscriptionStoreBase : AzureIntegrationTestBase
+    public abstract class GivenNoUserWithSubscriptionStoreBase : CloudServiceIntegrationTestBase
     {
         private ISubscriptionStore store;
 
@@ -224,7 +224,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
     }
 
     [TestFixture]
-    public abstract class GivenAUserWithSubscriptionStoreBase : AzureIntegrationTestBase
+    public abstract class GivenAUserWithSubscriptionStoreBase : CloudServiceIntegrationTestBase
     {
         private ISubscriptionStore store;
 

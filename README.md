@@ -65,9 +65,9 @@ By default, the services of this project will use default names for storage tabl
 * `AzureTableSubscriptionStore` will create and use a storage table named: 'webhooksubscriptions'
 * `AzureQueueEventSink` will create and use a storage queue named: 'webhookevents'
 
-## Cloud Configuration
+## Storage Configuration
 
-If you are hosting your web service in an Azure WebRole, you may want to customize the 'subscription store' and the 'event sink' from your cloud configuration (`ServiceConfiguration.cscfg`) file, instead of using the defaults, or specifying them in code. 
+If you are hosting your web service in an Cloud Service WebRole or in a Service Fabric Stateless Service, you may want to customize the 'subscription store' and the 'event sink' in your configuration file, instead of using the defaults, or specifying them in code. 
 
 You would do that by registering the [`CloudAppSettings`](https://github.com/jezzsantos/ServiceStack.Webhooks.Azure/blob/master/src/Webhooks.Azure/Settings/CloudAppSettings.cs) in your service like this:
 
@@ -84,9 +84,7 @@ public override void Configure(Container container)
 }
 ```
 
-Then, in the 'Azure Cloud Service' project that you have created for your service, edit the properties of the role you have for your web service.
-
-Go to the 'Settings' tab and add the following settings:
+Then, in the configuration of your WebRole or Stateless Service, edit the properties of the role you have for your web service:
 
 * (ConnectionString) **AzureTableSubscriptionStore.ConnectionString** - The Azure Storage account connection string for your table. Default: UseDevelopmentStorage=true
 * (string) **AzureTableSubscriptionStore.SubscriptionsTable.Name** - The name of the storage table where subscriptions are stored. Default: webhooksubscriptions
@@ -115,13 +113,13 @@ public override void Configure(Container container)
 }
 ```
 
-## Developing an Azure WorkerRole Relay
+## Using an Azure WorkerRole Relay
 
 To relay events from an Azure queue, you can deploy an Azure WorkerRole that picks up the events from the 'queue' and relays them to all subscribers.
 
 This is how to do it:
 
-Create a new 'Azure Cloud Service' project in your solution, and add a 'WorkerRole' to it. (in this example we will name it "WebhookEventRelay")
+Create a new 'Cloud Service' project in your solution, and add a 'WorkerRole' to it. (in this example we will name it "WebhookEventRelay")
 
 In the new 'WebhookEventRelay' project, install the nuget package:
 
@@ -132,14 +130,11 @@ Install-Package Servicestack.Webhooks.Azure
 In the 'WorkerRole.cs' file that was created for you, replace the 'WorkerRole' class with this code:
 
 ```
-public class WorkerRole : AzureWorkerRoleEntryPoint
+    public class WorkerRole : AzureWorkerRoleEntryPoint
     {
         private List<WorkerEntryPoint> workers;
 
-        protected override IEnumerable<WorkerEntryPoint> Workers
-        {
-            get { return workers; }
-        }
+        protected override IEnumerable<WorkerEntryPoint> Workers => workers;
 
         public override void Configure(Container container)
         {
@@ -157,11 +152,11 @@ public class WorkerRole : AzureWorkerRoleEntryPoint
     }
 ```
 
-**WARNING: ** Before deploying your new webhook workerrole to the cloud you will need to make some configuration changes to work with data stores in the cloud, (rather than using local storage on your machine). 
+**WARNING: ** Before deploying your new WorkerRole to a Cloud Service in Azure you will need to make some configuration changes to work with data stores in the cloud, (rather than using local storage on your machine). 
 
-## Configuring your Azure WorkerRole Relay
+### Configuring Relay
 
-Since you are deploying this component to Azure, the configuration for it will likely exist in your Azure configuration (`ServiceConfiguration.cscfg`) file as well:
+Since you are deploying this component to a Cloud Service, the configuration for it will likely exist in  (`ServiceConfiguration.cscfg`) file as well:
 
 In the 'Cloud' project that you created, edit the properties of the 'WebhookEventRelay' role.
 
@@ -177,7 +172,65 @@ Go to the 'Settings' tab and add the following settings:
 
 Note: the value of the setting `EventRelayQueueProcessor.TargetQueue.Name` must be the same as the `AzureQueueEventSink.QueueName` that you may have configured in the `WebhookFeature`.
 
+## Using a Service Fabric Stateless Service Relay
 
+To relay events from an Azure queue, you can deploy a Stateless Service in Service Fabric that picks up the events from the 'queue' and relays them to all subscribers.
+
+This is how to do it:
+
+Create a new 'Service Fabric Application' project in your solution, and add a 'StatelessService' to it. (in this example we will name it "WebhookEventRelay")
+
+In the new 'WebhookEventRelay' project, install the nuget package:
+
+```
+Install-Package Servicestack.Webhooks.Azure
+```
+
+In the 'WorkerService.cs' file that was created for you, replace the 'WorkerService' class with this code:
+
+```
+    public class WorkerService : AzureWorkerServiceEntryPoint
+    {
+        private List<WorkerEntryPoint> workers;
+
+        public WorkerService(StatelessServiceContext context) : base(context)
+        {
+        }
+
+        protected override IEnumerable<WorkerEntryPoint> Workers => workers;
+
+        public override void Configure(Container container)
+        {
+            base.Configure(container);
+
+            container.Register<IAppSettings>(new FabricAppSettings(Context));
+            container.Register(new EventRelayWorker(container));
+
+            workers = new List<WorkerEntryPoint>
+            {
+                container.Resolve<EventRelayWorker>()
+            };
+        }
+    }
+```
+
+**WARNING: ** Before deploying your new Stateless Service to a Service Fabric in Azure you will need to make some configuration changes to work with data stores in the cloud, (rather than using local storage on your machine). 
+
+### Configuring your Relay
+
+Since you are deploying this component to a Service Fabric, the configuration for it will likely exist in your (`PackageRoot\Config\settings.xml`) file of your stateless service project:
+
+Add the following settings:
+
+* (string) **SubscriptionServiceClient.SubscriptionService.BaseUrl** - The base URL of your webhook subscription service (where the `WebhookFeature` is installed ). For example: http://myserver:80/api
+* (string) **EventRelayQueueProcessor.Polling.Interval.Seconds** - The interval (in seconds) that the worker role polls the Azure queue for new events. Default: 5
+* (ConnectionString) **EventRelayQueueProcessor.ConnectionString** - The Azure Storage account connection string. Default: UseDevelopmentStorage=true
+* (string) **EventRelayQueueProcessor.TargetQueue.Name** - The name of the queue where events will be polled. Default: webhookevents
+* (string) **EventRelayQueueProcessor.UnhandledQueue.Name** - The name of the queue where failed events are dropped. Default: unhandledwebhookevents
+* (string) **EventRelayQueueProcessor.ServiceClient.Retries** - The number of retry attempts the relay will make to notify a subscriber before giving up. Default: 3
+* (string) **EventRelayQueueProcessor.ServiceClient.Timeout.Seconds** - The timeout (in seconds) the relay will wait for the subscriber endpoint before cancelling the notification. Default: 60
+
+Note: the value of the setting `EventRelayQueueProcessor.TargetQueue.Name` must be the same as the `AzureQueueEventSink.QueueName` that you may have configured in the `WebhookFeature`.
 
 # Development Notes
 

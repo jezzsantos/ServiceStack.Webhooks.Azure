@@ -28,10 +28,8 @@
   </PropertyGroup>
 
   <!-- Strong naming for all projects -->
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
   <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ServiceStack.Webhooks.Azure.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>

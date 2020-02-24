@@ -6,7 +6,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
     public class AzureQueueEventSinkSpec
     {
         [TestFixture]
-        public class GivenAQueue : AzureIntegrationTestBase
+        public class GivenAQueue : CloudServiceIntegrationTestBase
         {
             private AzureQueueEventSink sink;
 

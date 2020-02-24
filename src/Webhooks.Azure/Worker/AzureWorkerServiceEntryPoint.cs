@@ -39,16 +39,15 @@ namespace ServiceStack.Webhooks.Azure.Worker
             Configure(container);
 
             var workerName = GetType().FullName;
-            logger.Info("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerRoleEntryPoint] {0}.Running".Fmt(workerName));
+            logger.Info("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerServiceEntryPoint] {0}.Running".Fmt(workerName));
 
             try
             {
-                // Run and wait synchronously
-                await ServiceLoop.RunAsync(Workers.ToList(), logger, cancellation);
+                await WorkerRunner.RunContinuouslyAsync(logger, Workers.ToList(), cancellation);
             }
             catch (OperationCanceledException)
             {
-                logger.Info("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerRoleEntryPoint] {0}.Interupted".Fmt(workerName));
+                logger.Info("[ServiceStack.Webhooks.Azure.Worker.AzureWorkerServiceEntryPoint] {0}.Interrupted".Fmt(workerName));
                 // Ignore the exception to allow worker to shutdown gracefully
             }
         }

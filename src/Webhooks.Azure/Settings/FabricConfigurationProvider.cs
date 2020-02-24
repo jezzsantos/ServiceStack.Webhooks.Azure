@@ -44,9 +44,13 @@ namespace ServiceStack.Webhooks.Azure.Settings
         private string GetSettingInternal(string settingName)
         {
             var configPackage = context.CodePackageActivationContext.GetConfigurationPackageObject("Config");
-
             var parameters = configPackage.Settings.Sections["AppSettings"].Parameters;
-            return parameters[settingName]?.Value;
+            if (parameters.Contains(settingName))
+            {
+                return parameters[settingName]?.Value;
+            }
+
+            return null;
         }
     }
 }

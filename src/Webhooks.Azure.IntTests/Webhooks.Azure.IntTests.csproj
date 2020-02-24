@@ -43,4 +43,18 @@
     <Copy SourceFiles="@(CloudCsxFiles)" DestinationFiles="@(CloudCsxFiles->'$(TestContentDir)csx\%(RecursiveDir)%(Filename)%(Extension)')" />
     <Copy SourceFiles="@(CloudRcfFiles)" DestinationFiles="@(CloudRcfFiles->'$(TestContentDir)rcf\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
+  <Target Name="CopyFaricResources" AfterTargets="CoreCompile">
+    <!-- Copy Fabric Local Cluster Resources to local 'TestContent' folder, needed for integration testing -->
+    <PropertyGroup>
+      <TestContentDir>$(ProjectDir)TestContent\Fabric\bin\</TestContentDir>
+      <FabricProjectPath>$(SolutionDir)Fabric</FabricProjectPath>
+    </PropertyGroup>
+    <Message Importance="High" Text="Copying Service Fabric resources from: '$(FabricProjectPath)' to output: '$(TestContentDir)'" />
+    <RemoveDir Directories="$(TestContentDir)" ContinueOnError="true" />
+    <MakeDir Directories="$(TestContentDir)" ContinueOnError="true" />
+    <ItemGroup>
+      <FabricPkgFiles Include="$(FabricProjectPath)\pkg\$(Configuration)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FabricPkgFiles)" DestinationFiles="@(FabricPkgFiles->'$(TestContentDir)%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
 </Project>
