@@ -188,7 +188,8 @@ namespace ServiceStack.Webhooks.Azure.IntTests
             {
             }
 
-            [Test, Category("Integration")]
+            /// Fails in AppVeyor, until they install Service fabric SDK https://help.appveyor.com/discussions/problems/26433-service-fabric-sdk-is-not-available-on-visual-studio-2019-image
+            [Test, Category("Integration.NOCI")]
             public void WhenNoEventOnQueue_ThenNoSubscribersNotified()
             {
                 WaitFor(30);
@@ -198,7 +199,7 @@ namespace ServiceStack.Webhooks.Azure.IntTests
                 Assert.That(consumed.Count, Is.EqualTo(0));
             }
 
-            [Test, Category("Integration")]
+            [Test, Category("Integration.NOCI")]
             public void WhenEventQueued_ThenSubscriberNotified()
             {
                 SetupEvent("aneventname");
