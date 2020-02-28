@@ -9,6 +9,8 @@ environment:
   - buildconfig: ReleaseNoTestDeploy
     azureconfig: Local
     buildfrx: net472
+install:
+  - cmd: Webpicmd /install /products:"MicrosoftAzure-ServiceFabric-CoreSDK" /AcceptEULA /SuppressReboot
 build_script:
 - cmd: >-
     cd src
