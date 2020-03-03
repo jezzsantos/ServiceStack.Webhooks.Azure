@@ -14,7 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.6" />
     <PackageReference Include="Microsoft.Azure.Storage.Queue" Version="11.1.2" />
-    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="4.0.466" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="4.0.466" Condition="'$(TargetFramework)' == 'netstandard20'"/>
     <PackageReference Include="Microsoft.WindowsAzure.ConfigurationManager" Version="3.2.3" Condition="'$(TargetFramework)' == 'net472'" />
     <PackageReference Include="Microsoft.WindowsAzure.SDK" Version="2.9.0" Condition="'$(TargetFramework)' == 'net472'" />
     <PackageReference Include="ServiceStack.Webhooks">

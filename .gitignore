@@ -120,3 +120,4 @@ _ReSharper*/
 
 # Nuget
 *.nupkg
+/src/Fabric/pkg
